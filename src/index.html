@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      .font-syne { font-family: 'Syne', sans-serif; }
+      .font-space { font-family: 'Space Grotesk', sans-serif; }
+      body { overflow-x: hidden; cursor: none; }
+      
+      a, button, input, textarea, .cursor-pointer {
+        cursor: pointer; 
+      }
+
+      /* Barra de Progresso no Topo */
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 4px;
+        background: #7e22ce; /* Roxo */
+        z-index: 10001;
+        width: 0%;
+      }
+
+      /* Classe para a imagem redonda no serviço */
+      .service-img-pop {
+        position: absolute;
+        right: 1rem; 
+        top: 50%;
+        transform: translateY(-50%) scale(0);
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        z-index: 20;
+        pointer-events: none;
+      }
+      
+      @media (min-width: 768px) {
+        .service-img-pop {
+            width: 80px;
+            height: 80px;
+        }
+      }
+
+      .group:hover .service-img-pop {
+        transform: translateY(-50%) scale(1);
+      }
+
+      /* Menu Mobile Overlay */
+      #mobile-menu-overlay {
+        transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+      }
+      .menu-open {
+        overflow: hidden;
+      }
+      
+   
+
+    </style>
+
+    <title>Okto - Agência de Desenvolvimento Web</title>
+  </head>
+
+  <body class="bg-black pt-24">
+    
+    <div class="progress-bar"></div>
+
+    <div id="preloader" class="fixed inset-0 bg-black z-[10000] flex items-center justify-center">
+      <h1 class="font-syne text-white text-4xl md:text-6xl animate-pulse">
+        OKTO<span class="text-purple-700">.</span>
+      </h1>
+    </div>
+
+ 
+
+    <canvas id="canvas-cursor" class="fixed top-0 left-0 w-full h-full pointer-events-none z-[9999] mix-blend-difference hidden md:block"></canvas>
+
+    <header class="fixed top-0 left-0 w-full h-24 bg-black/80 backdrop-blur-xl border-b border-white/10 z-50 transition-all">
+      <div class="w-full flex items-center justify-between px-6 md:px-8 h-full max-w-[1600px] mx-auto">
+        
+        <h1 class="font-syne text-[32px] md:text-[48px] text-white z-50 relative">
+          OKTO<span class="text-purple-700">.</span>
+        </h1>
+
+        <nav class="hidden md:block">
+          <ul class="flex gap-8">
+            <li><a class="font-syne text-white text-[24px] relative hover:text-purple-500 transition-colors after:content-[''] after:block after:h-0.5 after:w-0 after:bg-purple-800 after:transition-all after:duration-500 after:absolute hover:after:w-full" href="/okto/src/projetos.html">projetos</a></li>
+           
+            <li><a class="font-syne relative text-white text-[24px] hover:text-purple-500 transition-colors after:content-[''] after:block after:h-0.5 after:w-0 after:bg-purple-800 after:transition-all after:duration-500 after:absolute hover:after:w-full" href="#">sobre nós</a></li>
+            <li><a class="font-syne relative text-white text-[24px] hover:text-purple-500 transition-colors after:content-[''] after:block after:h-0.5 after:w-0 after:bg-purple-800 after:transition-all after:duration-500 after:absolute hover:after:w-full" href="/okto/src/contatos.html">contatos</a></li>
+          </ul>
+        </nav>
+
+        <div class="flex items-center gap-1 z-50">
+            <div class="hidden md:flex gap-2">
+               <a class="font-syne font-bold text-black bg-white text-xl px-4 py-2 hover:bg-gray-400 transition hover:translate-y-1 hover:scale-110" href="#">PT</a>
+               <a class="font-syne font-bold text-white text-xl bg-[#353535] px-4 py-2 hover:bg-black transition hover:translate-y-1 hover:scale-110" href="#">EN</a>
+            </div>
+            
+            <a class="font-syne font-bold bg-[#5B00E2] text-sm md:text-xl text-white px-4 md:px-6 py-2 ml-2 hover:bg-purple-800 transition hover:translate-y-1 hover:scale-110 hidden xs:block" href="#contato">CONTATO</a>
+
+            <button id="menu-btn" class="md:hidden ml-4 flex flex-col justify-center items-center gap-1.5 w-10 h-10 border border-white/20 bg-white/5 rounded-full z-50">
+                <span class="block w-5 h-0.5 bg-white transition-all duration-300 origin-center"></span>
+                <span class="block w-5 h-0.5 bg-white transition-all duration-300 origin-center"></span>
+            </button>
+        </div>
+      </div>
+    </header>
+
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black z-40 transform translate-x-full flex flex-col justify-center items-center h-screen w-screen md:hidden">
+        <ul class="flex flex-col gap-8 text-center">
+            <li><a class="mobile-link font-syne text-white text-4xl hover:text-purple-500" href="#">projetos</a></li>
+          
+            <li><a class="mobile-link font-syne text-white text-4xl hover:text-purple-500" href="#">sobre nós</a></li>
+            <li><a class="mobile-link font-syne text-white text-4xl hover:text-purple-500" href="#contato">contatos</a></li>
+        </ul>
+        <div class="flex gap-4 mt-12">
+            <a class="font-syne font-bold text-black bg-white text-xl px-6 py-3" href="#">PT</a>
+            <a class="font-syne font-bold text-white text-xl bg-[#353535] px-6 py-3 border border-white/20" href="#">EN</a>
+        </div>
+    </div>
+
+    <section class="px-6 md:px-3 flex items-center justify-center max-w-[1600px] mx-auto overflow-hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-2 items-center gap-12 w-full pt-10 md:pt-0">
+        
+        <div class="order-2 lg:order-1 pb-10 md:pb-0 relative">
+          <div class="absolute top-0 left-[-20%] w-[500px] h-[500px]  rounded-full blur-[120px] pointer-events-none -z-10"></div>
+
+          <h1 class="font-space font-bold tracking-tighter leading-[0.9] text-white text-[48px] md:text-[80px] lg:text-[96px] mb-6 mt-6">
+            Expanda o <span class="text-purple-800">alcance</span> da sua empresa
+          </h1>
+
+          <p class="font-space text-white/80 text-lg md:text-[32px] mb-8 leading-snug md:leading-9 max-w-xl">
+            A <span class="text-purple-800">OKTO</span> desenvolve ecossistemas digitais fluidos que adaptam o seu negócio para todas as telas, garantindo que você nunca perca uma oportunidade.
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-4">
+            <button class="bg-white text-black font-bold font-syne px-6 py-4 hover:bg-gray-200 text-center transition delay-75 ease-in-out hover:translate-y-0.5 hover:scale-100 w-full sm:w-auto">
+              VEJA NOSSOS TRABALHOS
+            </button>
+            <button class="border border-white/20 bg-purple-700 font-bold font-syne text-white px-8 py-4 hover:bg-purple-600 text-center transition delay-75 ease-in-out hover:translate-y-0.5 hover:scale-100 w-full sm:w-auto">
+              CONTATO
+            </button>
+          </div>
+        </div>
+
+        <div class="order-1 lg:order-2 grid grid-cols-2 gap-3 h-[300px] md:h-[800px] overflow-hidden relative mask-gradient">
+          <div class="overflow-hidden relative">
+            <div class="stack-down space-y-4 will-change-transform">
+              <img src="/okto/IMG/imagem-header-1.svg" class="w-full bg-gray-800 aspect-[3/4] object-cover" />
+              <img src="/okto/IMG/imagem-header-2.svg" class="w-full bg-gray-800 aspect-[3/4] object-cover" />
+              <img src="/okto/IMG/imagem-header-3.svg" class="w-full bg-gray-800 aspect-[3/4] object-cover" />
+              <img src="/okto/IMG/imagem-header-1.svg" class="w-full bg-gray-800 aspect-[3/4] object-cover" />
+            </div>
+          </div>
+
+          <div class="overflow-hidden relative">
+            <div class="stack-up space-y-4 will-change-transform">
+              <img src="/okto/IMG/imagem-header-1.svg" class="w-full bg-gray-800 aspect-[3/4] object-cover" />
+              <img src="/okto/IMG/imagem-header-2.svg" class="w-full bg-gray-800 aspect-[3/4] object-cover" />
+              <img src="/okto/IMG/imagem-header-3.svg" class="w-full bg-gray-800 aspect-[3/4] object-cover" />
+              <img src="/okto/IMG/imagem-header-1.svg" class="w-full bg-gray-800 aspect-[3/4] object-cover" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="px-6 md:px-16 py-16 bg-black border-y border-white/10 mt-12 md:mt-0 overflow-hidden">
+      <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12 max-w-[1600px] mx-auto">
+        <p class="font-space text-white text-[20px] md:text-[24px] tracking-wide leading-8 uppercase w-full md:max-w-xs text-center md:text-left shrink-0">
+          Usamos da última geração da tecnologia para sua empresa
+        </p>
+
+        <div class="relative flex-1 w-full overflow-hidden group/track">
+          <div class="pointer-events-none absolute left-0 top-0 h-full w-12 md:w-24 bg-gradient-to-r from-black to-transparent z-20"></div>
+          <div class="pointer-events-none absolute right-0 top-0 h-full w-12 md:w-24 bg-gradient-to-l from-black to-transparent z-20"></div>
+
+          <div class="tech-track flex items-center gap-12 md:gap-20 w-max py-8 will-change-transform">
+            <div class="group relative flex flex-col items-center justify-center cursor-pointer">
+                <span class="iconify text-4xl md:text-5xl text-white/50 transition-all duration-300 group-hover:text-white group-hover:-translate-y-2 group-hover:scale-110" data-icon="logos:java"></span>
+            </div>
+            <div class="group relative flex flex-col items-center justify-center cursor-pointer">
+                <span class="iconify text-4xl md:text-5xl text-white/50 transition-all duration-300 group-hover:text-white group-hover:-translate-y-2 group-hover:scale-110" data-icon="logos:react"></span>
+            </div>
+            <div class="group relative flex flex-col items-center justify-center cursor-pointer">
+                <span class="iconify text-4xl md:text-5xl text-white/50 transition-all duration-300 group-hover:text-white group-hover:-translate-y-2 group-hover:scale-110" data-icon="logos:figma"></span>
+            </div>
+            <div class="group relative flex flex-col items-center justify-center cursor-pointer">
+                <span class="iconify text-4xl md:text-5xl text-white/50 transition-all duration-300 group-hover:text-white group-hover:-translate-y-2 group-hover:scale-110" data-icon="logos:html-5"></span>
+            </div>
+            <div class="group relative flex flex-col items-center justify-center cursor-pointer">
+                <span class="iconify text-4xl md:text-5xl text-white/50 transition-all duration-300 group-hover:text-white group-hover:-translate-y-2 group-hover:scale-110" data-icon="logos:css-3"></span>
+            </div>
+            <div class="group relative flex flex-col items-center justify-center cursor-pointer">
+                <span class="iconify text-4xl md:text-5xl text-white/50 transition-all duration-300 group-hover:text-white group-hover:-translate-y-2 group-hover:scale-110" data-icon="logos:javascript"></span>
+            </div>
+            <div class="group relative flex flex-col items-center justify-center cursor-pointer">
+                <span class="iconify text-4xl md:text-5xl text-white/50 transition-all duration-300 group-hover:text-white group-hover:-translate-y-2 group-hover:scale-110" data-icon="logos:tailwindcss-icon"></span>
+            </div>
+             <div class="group relative flex flex-col items-center justify-center cursor-pointer">
+                <span class="iconify text-4xl md:text-5xl text-white/50 transition-all duration-300 group-hover:text-white group-hover:-translate-y-2 group-hover:scale-110" data-icon="logos:nodejs-icon"></span>
+            </div>
+            <div class="group relative flex flex-col items-center justify-center cursor-pointer">
+                <span class="iconify text-4xl md:text-5xl text-white/50 transition-all duration-300 group-hover:text-white group-hover:-translate-y-2 group-hover:scale-110" data-icon="logos:git-icon"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pt-10 md:pt-16 px-6 md:px-12 pb-20 bg-black flex items-center justify-center mx-0-auto flex-col">
+      <p class="split font-space text-4xl md:text-[60px] text-white leading-tight md:leading-20 tracking-tighter text-center mt-0 overflow-hidden">
+        A agência que dá à sua empresa o<br> <span class="text-purple-800">suporte</span> que estava procurando
+      </p>
+      <p class="text-white font-space text-lg md:text-[32px] text-center max-w-[1600px] mx-auto leading-8 md:leading-10 tracking-tight mt-6 md:mt-0">
+        Em um mundo que muda na velocidade da luz, nós criamos experiências digitais que crescem junto com as suas ambições, impulsionadas por tecnologia inteligente, design intencional e uma mentalidade preparada para o <span class="text-purple-800">futuro</span>.
+      </p>
+    </section>
+
+    <section class="bg-white py-16 md:py-24 px-6 md:px-16 border-t border-white/10">
+      <div class="max-w-[1600px] mx-auto">
+        
+        <div class="flex flex-col md:flex-row justify-between items-end gap-8 mb-12 md:mb-20">
+          <div class="max-w-2xl">
+            <span class="font-space font-bold text-purple-600 uppercase tracking-[0.2em] text-sm mb-4 block">
+              resultados
+            </span>
+            <h2 class="font-space font-bold text-black text-4xl md:text-6xl tracking-tight leading-tight">
+              Impactos que você <span class="text-purple-500">sente</span>
+            </h2>
+          </div>
+          
+          <p class="font-space text-black/60 text-lg md:text-lg max-w-md text-left md:text-right leading-relaxed w-full">
+            Interações rápidas geram confiança. E confiança gera <span class="text-purple-400 font-bold decoration-purple-900 underline-offset-4">vendas</span>.
+          </p>
+        </div>
+    
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 divide-y-2 md:divide-y-0 md:divide-x-2 divide-black/35 mb-16 md:mb-24">
+          
+          <div class="md:pr-12 py-8 md:py-0">
+            <h3 class="font-space font-bold text-black text-6xl md:text-7xl mb-2 counter">100%</h3>
+            <p class="font-space font-bold text-black text-xl mb-4">Práticas de SEO</p>
+            <p class="font-space text-black/50 text-lg leading-relaxed">
+              Seu site pronto para o topo das buscas, estruturado semanticamente para o Google.
+            </p>
+          </div>
+    
+          <div class="md:px-12 py-8 md:py-0">
+            <h3 class="font-space font-bold text-black text-6xl md:text-7xl mb-2">&lt; 1s</h3>
+            <p class="font-space font-bold text-black text-xl mb-4">Latência Zero</p>
+            <p class="font-space text-black/50 text-lg leading-relaxed">
+              Navegação fluida sem telas brancas de carregamento. Performance instantânea.
+            </p>
+          </div>
+    
+          <div class="md:pl-12 py-8 md:py-0">
+            <h3 class="font-space font-bold text-black text-6xl md:text-7xl mb-2">24/7</h3>
+            <p class="font-space font-bold text-black text-xl mb-4">Monitoramento</p>
+            <p class="font-space text-black/50 text-lg leading-relaxed">
+              Segurança e estabilidade garantidas. Seu negócio online o tempo todo.
+            </p>
+          </div>
+    
+        </div>
+    
+        <div class="flex flex-col md:flex-row gap-8 md:gap-10 mt-12 relative items-center md:items-start text-center md:text-left">
+          <h3 class="font-space text-2xl md:text-4xl text-black">
+            Transforme visitantes em <span class="text-black font-bold">clientes</span>.
+          </h3>
+    
+          <img src="/okto/IMG/seta.svg" alt="seta indicativa" class="hidden md:block absolute top-[32px] right-[720px]" />
+    
+          <a href="#contato" class="group px-12 py-4 bg-transparent border-2 border-black/30 hover:border-purple-500 transition-colors duration-300 w-full md:w-auto md:absolute md:top-[20px] md:right-[420px]">
+            <span class="font-space font-bold text-black text-[20px] md:text-[24px] group-hover:text-purple-400 transition-colors"> 
+              fale conosco
+            </span>
+          </a>
+        </div>
+    
+      </div>
+    </section>
+
+    <section class="bg-black py-16 md:py-24 px-6 md:px-16 border-t border-white/10">
+      <div class="max-w-[1600px] mx-auto">
+        <div class="mb-12 md:mb-16">
+          <h2 class="font-syne font-bold text-white text-4xl md:text-5xl">
+            Nossos serviços
+          </h2>
+        </div>
+    
+        <div class="flex flex-col">
+          <a href="#" class="group relative border-t border-white/10 py-8 md:py-10 flex items-center justify-between transition-all duration-500 hover:border-purple-600 hover:pl-4 cursor-pointer overflow-hidden">
+            <h3 class="font-space text-2xl md:text-4xl text-white group-hover:text-purple-500 transition-colors z-10 w-full">
+              Desenvolvimento Web
+            </h3>
+            <img class="service-img-pop" src="/okto/IMG/imagem-header-1.svg" alt="Desenvolvimento Web">
+          </a>
+    
+          <a href="#" class="group relative border-t border-white/10 py-8 md:py-10 flex items-center justify-between transition-all duration-500 hover:border-purple-600 hover:pl-4 cursor-pointer overflow-hidden">
+            <h3 class="font-space text-2xl md:text-4xl text-white group-hover:text-purple-500 transition-colors z-10 w-full">
+              Design de Interface (UI/UX)
+            </h3>
+            <img class="service-img-pop" src="/okto/IMG/imagem-header-1.svg" alt="UI/UX">
+          </a>
+    
+          <a href="#" class="group relative border-t border-white/10 py-8 md:py-10 flex items-center justify-between transition-all duration-500 hover:border-purple-600 hover:pl-4 cursor-pointer overflow-hidden">
+            <h3 class="font-space text-2xl md:text-4xl text-white group-hover:text-purple-500 transition-colors z-10 w-full">
+              SEO Essencial
+            </h3>
+            <img class="service-img-pop" src="/okto/IMG/imagem-header-1.svg" alt="SEO">
+          </a>
+    
+          <a href="#" class="group relative border-t border-white/10 py-8 md:py-10 flex items-center justify-between transition-all duration-500 hover:border-purple-600 hover:pl-4 cursor-pointer overflow-hidden">
+            <h3 class="font-space text-2xl md:text-4xl text-white group-hover:text-purple-500 transition-colors z-10 w-full">
+              Performance & Velocidade
+            </h3>
+            <img class="service-img-pop" src="/okto/IMG/imagem-header-1.svg" alt="Performance">
+          </a>
+    
+          <a href="#" class="group relative border-t border-b border-white/10 py-8 md:py-10 flex items-center justify-between transition-all duration-500 hover:border-purple-600 hover:pl-4 cursor-pointer overflow-hidden">
+            <h3 class="font-space text-2xl md:text-4xl text-white group-hover:text-purple-500 transition-colors z-10 w-full">
+              Suporte e Manutenção
+            </h3>
+            <img class="service-img-pop" src="/okto/IMG/imagem-header-1.svg" alt="Suporte">
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="relative w-full py-20 px-6 md:py-32 md:px-24 flex flex-col items-center justify-center bg-black overflow-hidden">
+      <img 
+        src="/okto/IMG/bg-polvo.svg" 
+        alt="Fundo Polvo" 
+        class="absolute w-[600px] md:w-[1310px] opacity-40 md:opacity-100 pointer-events-none" 
+      />
+    
+      <div class="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center">
+        <h1 class="text-white font-space font-light text-3xl md:text-5xl mb-8 md:mb-12">
+          O que é <span class="text-purple-700">OKTO</span>?
+        </h1>
+    
+        <p class="text-white font-space text-lg md:text-4xl font-light leading-relaxed max-w-4xl text-justify md:text-center">
+          Somos uma empresa de desenvolvimento de sites focada no seu crescimento. Criamos a presença online do seu negócio com um único objetivo: fazer sua empresa alcançar mais pessoas e colocar <span class="text-purple-700 font-bold">mais lucro no seu bolso</span>.
+          <br><br>
+          O nome vem de Octopus (polvo), e a ideia por trás disso é simples. Assim como o polvo usa seus vários braços para alcançar e resolver múltiplas coisas ao mesmo tempo, nossa agência oferece diversas soluções em um só lugar. Nós "abraçamos" todas as necessidades digitais do seu negócio, do código à estratégia.
+        </p>
+    
+        <button class="mt-10 md:mt-16 bg-[#C4C4C4] hover:bg-white hover:scale-105 transition-all duration-300 text-black font-space font-medium py-4 px-8 md:px-12 text-base md:text-lg w-full md:w-auto">
+          Saiba mais sobre nós
+        </button>
+      </div>
+    </section>
+
+    <section id="contato" class="bg-black py-16 md:py-24 px-6 md:px-16 border-t border-white/10 relative overflow-hidden">
+      <div class="max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+        
+        <div class="w-full">
+          <h2 class="font-syne font-bold text-white text-4xl md:text-5xl mb-8 md:mb-12 leading-tight">
+            Vamos criar algo <br>
+            <span class="text-purple-700">incrível</span> juntos?
+          </h2>
+    
+          <form class="flex flex-col gap-8">
+            <div class="relative w-full group">
+              <input type="text" id="nome" class="peer block w-full bg-transparent border-b border-white/30 py-4 text-white font-space text-xl focus:outline-none focus:border-purple-600 transition-colors placeholder-transparent" placeholder=" " required />
+              <label for="nome" class="absolute left-0 top-4 text-white/50 font-space text-xl transition-all duration-300 pointer-events-none peer-placeholder-shown:top-4 peer-placeholder-shown:text-xl peer-placeholder-shown:text-white/50 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-purple-500 peer-valid:-top-6 peer-valid:text-sm peer-valid:text-purple-500">
+                Seu Nome
+              </label>
+            </div>
+    
+            <div class="relative w-full group">
+              <input type="email" id="email" class="peer block w-full bg-transparent border-b border-white/30 py-4 text-white font-space text-xl focus:outline-none focus:border-purple-600 transition-colors placeholder-transparent" placeholder=" " required />
+              <label for="email" class="absolute left-0 top-4 text-white/50 font-space text-xl transition-all duration-300 pointer-events-none peer-placeholder-shown:top-4 peer-placeholder-shown:text-xl peer-placeholder-shown:text-white/50 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-purple-500 peer-valid:-top-6 peer-valid:text-sm peer-valid:text-purple-500">
+                Seu E-mail
+              </label>
+            </div>
+    
+            <div class="relative w-full group">
+              <textarea id="mensagem" rows="4" class="peer block w-full bg-transparent border-b border-white/30 py-4 text-white font-space text-xl focus:outline-none focus:border-purple-600 transition-colors placeholder-transparent resize-none" placeholder=" " required></textarea>
+              <label for="mensagem" class="absolute left-0 top-4 text-white/50 font-space text-xl transition-all duration-300 pointer-events-none peer-placeholder-shown:top-4 peer-placeholder-shown:text-xl peer-placeholder-shown:text-white/50 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-purple-500 peer-valid:-top-6 peer-valid:text-sm peer-valid:text-purple-500">
+                Sobre o que vamos conversar?
+              </label>
+            </div>
+    
+            <div class="mt-4">
+              <button type="submit" class="w-full md:w-auto border border-white/20 bg-purple-700 font-bold font-syne text-white px-10 py-5 text-lg hover:bg-purple-600 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(126,34,206,0.4)]">
+                ENVIAR MENSAGEM
+              </button>
+            </div>
+          </form>
+        </div>
+    
+        <div class="relative flex justify-center items-center h-[300px] md:h-[400px] lg:h-[600px] order-first lg:order-last">
+          <div class="absolute w-[200px] md:w-[300px] h-[200px] md:h-[300px] bg-purple-900/30 rounded-full blur-[80px] md:blur-[100px] -z-10"></div>
+          <lottie-player 
+            class="transition-transform duration-500 hover:scale-125 cursor-pointer"
+            src="/okto/IMG/okto-aniamtion.json" 
+            background="transparent" 
+            speed="0.6" 
+            style="width: 100%; height: 100%; max-width: 600px;" 
+            loop 
+            autoplay>
+          </lottie-player>
+        </div>
+      </div>
+    </section>
+
+    <footer class="bg-white text-black pt-0 pb-5 relative overflow-hidden z-10">
+      <div class="w-full flex justify-center items-center overflow-hidden border-b border-black/10">
+        <h1 class="footer-big-text font-space font-extrabold text-[45vw] leading-none tracking-tighter select-none text-black translate-y-[20%]">
+          OKTO
+        </h1>
+      </div>
+    
+      <div class="max-w-[1600px] mx-auto px-6 md:px-16 mt-16 grid grid-cols-1 md:grid-cols-12 gap-10">
+        <div class="md:col-span-4 flex flex-col justify-between">
+          <div>
+            <h3 class="font-syne font-bold text-3xl mb-4">OKTO<span class="text-purple-600">.</span></h3>
+            <p class="font-space text-lg opacity-60 max-w-xs">
+              Transformando códigos em experiências digitais imersivas e lucrativas.
+            </p>
+          </div>
+        </div>
+    
+        <div class="md:col-span-2">
+          <h4 class="font-syne font-bold text-lg mb-6 uppercase tracking-wider">Menu</h4>
+          <ul class="flex flex-col gap-3 font-space text-lg">
+            <li><a href="#" class="hover:text-purple-600 transition-colors relative w-max group">Projetos <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-purple-600 transition-all group-hover:w-full"></span></a></li>
+            <li><a href="#" class="hover:text-purple-600 transition-colors relative w-max group">Serviços <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-purple-600 transition-all group-hover:w-full"></span></a></li>
+            <li><a href="#" class="hover:text-purple-600 transition-colors relative w-max group">Sobre <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-purple-600 transition-all group-hover:w-full"></span></a></li>
+            <li><a href="#contato" class="hover:text-purple-600 transition-colors relative w-max group">Contato <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-purple-600 transition-all group-hover:w-full"></span></a></li>
+          </ul>
+        </div>
+    
+        <div class="md:col-span-2">
+          <h4 class="font-syne font-bold text-lg mb-6 uppercase tracking-wider">Social</h4>
+          <ul class="flex flex-col gap-3 font-space text-lg">
+            <li><a href="#" class="hover:text-purple-600 transition-colors flex items-center gap-2 group"><span class="iconify group-hover:-translate-y-1 transition-transform" data-icon="mdi:instagram"></span> Instagram</a></li>
+            <li><a href="#" class="hover:text-purple-600 transition-colors flex items-center gap-2 group"><span class="iconify group-hover:-translate-y-1 transition-transform" data-icon="mdi:linkedin"></span> LinkedIn</a></li>
+            <li><a href="#" class="hover:text-purple-600 transition-colors flex items-center gap-2 group"><span class="iconify group-hover:-translate-y-1 transition-transform" data-icon="mdi:github"></span> GitHub</a></li>
+          </ul>
+        </div>
+    
+        <div class="md:col-span-4 md:text-right flex flex-col justify-end">
+          <a href="mailto:contato@okto.com" class="font-syne font-bold text-2xl md:text-3xl hover:text-purple-600 transition-colors mb-6 break-words">
+            contato@okto.ag
+          </a>
+          <div class="font-space text-sm opacity-50 mt-auto">
+            <p>&copy; 2024 OKTO Agency.</p>
+            <p>Todos os direitos reservados.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/split-type"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+    <script>
+      // LOGICA DO MENU MOBILE
+      const menuBtn = document.getElementById('menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu-overlay');
+      const mobileLinks = document.querySelectorAll('.mobile-link');
+      let isMenuOpen = false;
+
+      menuBtn.addEventListener('click', () => {
+        isMenuOpen = !isMenuOpen;
+        
+        const spans = menuBtn.querySelectorAll('span');
+        if(isMenuOpen) {
+            spans[0].style.transform = 'rotate(45deg) translate(5px, 6px)';
+            spans[1].style.transform = 'rotate(-45deg) translate(5px, -6px)';
+            mobileMenu.classList.remove('translate-x-full');
+            document.body.classList.add('menu-open');
+        } else {
+            spans[0].style.transform = 'rotate(0) translate(0, 0)';
+            spans[1].style.transform = 'rotate(0) translate(0, 0)';
+            mobileMenu.classList.add('translate-x-full');
+            document.body.classList.remove('menu-open');
+        }
+      });
+
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if(isMenuOpen) menuBtn.click();
+        });
+      });
+
+      // 0. CONFIGURAÇÃO LENIS (SMOOTH SCROLL)
+      const lenis = new Lenis()
+      lenis.on('scroll', ScrollTrigger.update)
+      gsap.ticker.add((time) => { lenis.raf(time * 500) })
+      gsap.ticker.lagSmoothing(0)
+
+      document.addEventListener("DOMContentLoaded", () => {
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // 1. PROGRESS BAR LOGIC (NOVO)
+        gsap.to(".progress-bar", {
+            width: "100%",
+            scrollTrigger: {
+                trigger: "body",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 0
+            }
+        });
+
+        // 2. GENERIC TEXT REVEAL / FADE UP (NOVO)
+        // Seleciona textos que não têm animações específicas (como .split)
+        const fadeElements = document.querySelectorAll('section h2, section h3, section p:not(.split)');
+        fadeElements.forEach(el => {
+            gsap.from(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 90%", // Inicia quando o elemento entra na parte inferior da tela
+                    toggleActions: "play none none reverse" // Anima entrada e reverte ao subir
+                },
+                y: 40,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power3.out"
+            });
+        });
+
+        // 3. ANIMAÇÕES SCROLL HERO
+        function infiniteScrollVertical(selector, direction = 1, duration = 40) {
+          const el = document.querySelector(selector);
+          if(!el) return;
+          const height = el.scrollHeight / 2;
+          gsap.fromTo(el, { y: direction === 1 ? 0 : -height }, { y: direction === 1 ? -height : 0, duration: duration, ease: 'none', repeat: -1 });
+        }
+        infiniteScrollVertical('.stack-down', 1, 50);
+        infiniteScrollVertical('.stack-up', -1, 60);
+
+        // 4. TECNOLOGIAS HORIZONTAL SCROLL
+        const track = document.querySelector('.tech-track');
+        const trackContainer = document.querySelector('.group\\/track');
+        if (track && trackContainer) {
+            track.innerHTML += track.innerHTML;
+            const marquee = gsap.to(track, { xPercent: -50, duration: 40, ease: "none", repeat: -1 });
+            trackContainer.addEventListener('mouseenter', () => marquee.pause());
+            trackContainer.addEventListener('mouseleave', () => marquee.play());
+        }
+
+        // 5. ANIMAÇÃO DE TEXTO SPLIT (SÓ DESKTOP)
+        if(window.innerWidth > 768) {
+             const myText = new SplitType('.split', { types: 'words, chars' });
+             gsap.from(myText.chars, { scrollTrigger: { trigger: ".split", start: "top 85%", end: "bottom 50%", scrub: 1 }, y: 100, opacity: 0, duration: 1, stagger: 0.05, ease: "power1.out" });
+        } else {
+            // Fallback mobile
+            gsap.from(".split", { scrollTrigger: { trigger: ".split", start: "top 85%" }, y: 50, opacity: 0, duration: 1 });
+        }
+
+        // 6. ANIMAÇÃO DO FOOTER
+        gsap.to(".footer-big-text", {
+          scrollTrigger: {
+            trigger: "footer",
+            start: "top bottom", 
+            end: "bottom bottom",
+            scrub: 1
+          },
+          y: 0, 
+          scale: 1.05, 
+          ease: "power1.out"
+        });
+
+        // 7. PRELOADER
+        const tlLoader = gsap.timeline();
+        tlLoader
+          .to("#preloader h1", { opacity: 0, duration: 0.5, delay: 1 })
+          .to("#preloader", { y: "-100%", duration: 1, ease: "power4.inOut" })
+          .from("header", { y: -100, opacity: 0, duration: 0.8 }, "-=0.5")
+          .from(".order-2 h1", { y: 100, opacity: 0, duration: 0.8 }, "-=0.6");
+
+        // 8. CURSOR CANVAS (DESKTOP ONLY)
+        if (window.matchMedia("(pointer: fine)").matches) {
+            const canvas = document.querySelector("#canvas-cursor");
+            const ctx = canvas.getContext('2d');
+            let mouseMoved = false;
+            const pointer = { x: .5 * window.innerWidth, y: .5 * window.innerHeight }
+            const params = { pointsNumber: 40, widthFactor: .3, mouseThreshold: .6, spring: .4, friction: .5 };
+            const trail = new Array(params.pointsNumber);
+            for (let i = 0; i < params.pointsNumber; i++) { trail[i] = { x: pointer.x, y: pointer.y, dx: 0, dy: 0 } }
+            
+            window.addEventListener("click", e => updateMousePosition(e.clientX, e.clientY));
+            window.addEventListener("mousemove", e => { mouseMoved = true; updateMousePosition(e.clientX, e.clientY); });
+            window.addEventListener("touchmove", e => { mouseMoved = true; updateMousePosition(e.targetTouches[0].clientX, e.targetTouches[0].clientY); });
+
+            function updateMousePosition(eX, eY) { pointer.x = eX; pointer.y = eY; }
+            function setupCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+
+            function update(t) {
+                if (!mouseMoved) { pointer.x = (.5 + .3 * Math.cos(.002 * t) * (Math.sin(.005 * t))) * window.innerWidth; pointer.y = (.5 + .2 * (Math.cos(.005 * t)) + .1 * Math.cos(.01 * t)) * window.innerHeight; }
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.strokeStyle = "white"; 
+                trail.forEach((p, pIdx) => {
+                    const prev = pIdx === 0 ? pointer : trail[pIdx - 1];
+                    const spring = pIdx === 0 ? .4 * params.spring : params.spring;
+                    p.dx += (prev.x - p.x) * spring;
+                    p.dy += (prev.y - p.y) * spring;
+                    p.dx *= params.friction; p.dy *= params.friction; p.x += p.dx; p.y += p.dy;
+                });
+                ctx.lineCap = "round"; ctx.beginPath(); ctx.moveTo(trail[0].x, trail[0].y);
+                for (let i = 1; i < trail.length - 1; i++) { const xc = .5 * (trail[i].x + trail[i + 1].x); const yc = .5 * (trail[i].y + trail[i + 1].y); ctx.quadraticCurveTo(trail[i].x, trail[i].y, xc, yc); ctx.lineWidth = params.widthFactor * (params.pointsNumber - i); ctx.stroke(); }
+                ctx.lineTo(trail[trail.length - 1].x, trail[trail.length - 1].y); ctx.stroke();
+                window.requestAnimationFrame(update);
+            }
+            setupCanvas(); update(0); window.addEventListener("resize", setupCanvas);
+        }
+      });
+    </script>
+  </body>
+</html>

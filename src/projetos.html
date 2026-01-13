@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* --- GLOBAIS --- */
+      .font-syne { font-family: 'Syne', sans-serif; }
+      .font-space { font-family: 'Space Grotesk', sans-serif; }
+      
+      body { 
+        background-color: #000; 
+        color: #fff;
+        margin: 0;
+        overflow-x: hidden;
+      }
+
+      /* Esconde cursor no desktop para usar o canvas */
+      @media (min-width: 1024px) {
+        body { cursor: none; }
+        a, button { cursor: none; }
+      }
+
+      /* --- EXPANDING CARDS LOGIC --- */
+      :root {
+        --anim-speed: 0.6s;
+        --expand-speed: 0.7s;
+      }
+
+      .cont {
+        position: relative;
+        overflow: hidden;
+        height: 100vh;
+        padding-top: 6rem;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .cont__inner {
+        position: relative;
+        flex: 1;
+        width: 100%;
+        max-width: 1600px;
+        margin: 0 auto;
+        overflow: hidden;
+      }
+
+      /* ITEM INDIVIDUAL */
+      .el {
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: #1a1a1a;
+        overflow: hidden;
+        transition: transform var(--anim-speed) var(--expand-speed), 
+                    width var(--expand-speed), 
+                    height var(--expand-speed), 
+                    z-index 0s calc(var(--anim-speed) + var(--expand-speed));
+        will-change: transform, width, height;
+      }
+
+      /* --- DESKTOP (Horizontal) --- */
+      @media (min-width: 768px) {
+        .el {
+          width: 20%; /* 100% / 5 */
+          height: 100%;
+          border-right: 4px solid #000;
+        }
+        
+        .el:nth-child(1) { transform: translate3d(0%, 0, 0); }
+        .el:nth-child(2) { transform: translate3d(100%, 0, 0); }
+        .el:nth-child(3) { transform: translate3d(200%, 0, 0); }
+        .el:nth-child(4) { transform: translate3d(300%, 0, 0); }
+        .el:nth-child(5) { transform: translate3d(400%, 0, 0); }
+        .el:last-child { border-right: none; }
+
+        .el.s--active {
+          width: 100%;
+          transform: translate3d(0, 0, 0) !important;
+          z-index: 10;
+          transition: transform var(--anim-speed), width var(--expand-speed) 0.1s;
+        }
+
+        .cont.s--el-active .el:not(.s--active) {
+          transform: scale(0.9);
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.4s, transform 0.4s;
+        }
+
+        .el__heading {
+          transform: rotate(-90deg);
+          white-space: nowrap;
+        }
+      }
+
+      /* --- MOBILE (Vertical Stack) --- */
+      @media (max-width: 767px) {
+        .cont {
+          height: auto;
+          min-height: 100vh;
+        }
+        .cont__inner {
+          height: calc(100vh - 6rem);
+        }
+        
+        .el {
+          width: 100%;
+          height: 20%;
+          border-bottom: 4px solid #000;
+        }
+        
+        .el:nth-child(1) { transform: translate3d(0, 0%, 0); }
+        .el:nth-child(2) { transform: translate3d(0, 100%, 0); }
+        .el:nth-child(3) { transform: translate3d(0, 200%, 0); }
+        .el:nth-child(4) { transform: translate3d(0, 300%, 0); }
+        .el:nth-child(5) { transform: translate3d(0, 400%, 0); }
+
+        .el.s--active {
+          height: 100%;
+          transform: translate3d(0, 0, 0) !important;
+          z-index: 20;
+          top: 0;
+        }
+
+        .el__heading {
+          transform: rotate(0deg);
+          font-size: 18px;
+          margin-left: 20px;
+        }
+        
+        .el__preview-cont {
+          justify-content: flex-start !important;
+          padding-left: 20px;
+        }
+        
+        .el__text { font-size: 32px !important; }
+        .el__index { display: none; }
+        .el__close-btn { top: 20px; right: 20px; }
+      }
+
+      .el:not(.s--active) { cursor: pointer; }
+
+      .el__overflow {
+        overflow: hidden;
+        position: relative;
+        height: 100%;
+      }
+
+      .el__inner {
+        overflow: hidden;
+        position: relative;
+        height: 100%;
+        transition: transform 1s;
+      }
+
+      /* --- IMAGENS (ALTERADO PARA USAR VARIÁVEIS) --- */
+      .el__bg {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .el__bg:before {
+        content: "";
+        position: absolute;
+        left: 0; top: 0; width: 100%; height: 100%;
+        background-size: cover;
+        background-position: center;
+        transition: transform 1s, filter 0.5s;
+        
+        /* AQUI ESTÁ A MÁGICA: Pega a imagem do HTML */
+        background-image: var(--bg-img);
+        
+        filter: grayscale(100%) brightness(0.6);
+      }
+
+      .el:hover .el__bg:before, .el.s--active .el__bg:before {
+        filter: grayscale(0%) brightness(1);
+        transform: scale(1.1);
+      }
+
+      .el__bg:after {
+        content: "";
+        z-index: 1;
+        position: absolute;
+        left: 0; top: 0; width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        transition: opacity 0.5s;
+      }
+
+      .cont.s--el-active .el__bg:after {
+        transition: opacity 0.5s 1.4s;
+        opacity: 1 !important;
+      }
+
+      /* Títulos e Conteúdo */
+      .el__preview-cont {
+        z-index: 2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        left: 0; top: 0; width: 100%; height: 100%;
+        transition: opacity 0.3s;
+      }
+      
+      .el.s--active .el__preview-cont { opacity: 0; pointer-events: none; }
+
+      .el__heading {
+        color: #fff;
+        text-transform: uppercase;
+        font-family: 'Syne', sans-serif;
+        font-weight: 700;
+        font-size: 24px;
+        letter-spacing: 2px;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.8); /* Sombra para legibilidade */
+      }
+
+      .el__content {
+        z-index: 3;
+        position: absolute;
+        left: 0; top: 0; width: 100%; height: 100%;
+        padding: 20px;
+        opacity: 0;
+        pointer-events: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background: rgba(0,0,0,0.6);
+        transition: opacity 0.5s 0.5s;
+      }
+
+      .el.s--active .el__content {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .el__text {
+        font-family: 'Syne', sans-serif;
+        font-size: 40px;
+        font-weight: 800;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+      }
+      @media(min-width: 768px) { .el__text { font-size: 60px; } }
+
+      .el__close-btn {
+        position: absolute;
+        right: 20px; top: 120px;
+        width: 40px; height: 40px;
+        cursor: pointer;
+        z-index: 10;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0,0,0,0.5);
+      }
+      .el.s--active .el__close-btn { opacity: 1; pointer-events: auto; }
+      .el__close-btn:before { content: "✕"; color: white; font-family: sans-serif; font-size: 14px; }
+
+      .el__index {
+        position: absolute;
+        bottom: -50px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 15vw;
+        font-weight: 700;
+        opacity: 0.1;
+        pointer-events: none;
+        transition: opacity 0.3s;
+      }
+      .el:hover .el__index { opacity: 0.3; }
+      .el.s--active .el__index { opacity: 0; }
+
+    </style>
+
+    <title>Projetos - Okto</title>
+  </head>
+
+  <body class="bg-black">
+    
+    <canvas id="canvas-cursor" class="hidden lg:block fixed top-0 left-0 w-full h-full pointer-events-none z-[9999] mix-blend-difference"></canvas>
+
+    <header class="fixed top-0 left-0 w-full h-24 bg-black/80 backdrop-blur-xl border-b border-white/10 z-50 transition-all">
+      <div class="w-full flex items-center justify-between px-6 md:px-8 h-full max-w-[1600px] mx-auto">
+        <h1 class="font-syne text-[32px] md:text-[48px] text-white">
+          OKTO<span class="text-purple-700">.</span>
+        </h1>
+
+        <nav class="hidden md:block">
+          <ul class="flex gap-8">
+            <li><a class="font-syne text-white text-lg relative hover:text-purple-500 transition-colors" href="index.html">home</a></li>
+            <li><a class="font-syne text-purple-500 text-lg relative" href="#">projetos</a></li>
+            <li><a class="font-syne text-white text-lg relative hover:text-purple-500 transition-colors" href="#">sobre nós</a></li>
+            <li><a class="font-syne text-white text-lg relative hover:text-purple-500 transition-colors" href="#">contatos</a></li>
+          </ul>
+        </nav>
+
+        <div class="flex items-center gap-1">
+          <div class="hidden md:flex gap-2">
+             <a class="font-syne font-bold text-black bg-white text-xl px-4 py-2 hover:bg-gray-400 transition delay-75 ease-in-out hover:translate-y-1 hover:scale-110" href="#">PT</a>
+             <a class="font-syne font-bold text-white text-xl bg-[#353535] px-4 py-2 hover:bg-black transition delay-75 ease-in-out hover:translate-y-1 hover:scale-110" href="#">EN</a>
+          </div>
+          <a class="font-syne font-bold bg-[#5B00E2] text-sm md:text-xl text-white px-4 md:px-6 py-2 ml-2 hover:bg-purple-800 transition delay-75 ease-in-out hover:translate-y-1 hover:scale-110" href="#">CONTATO</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="cont s--inactive">
+      <div class="cont__inner">
+        
+        <div class="el" style="--bg-img: url('/okto/IMG/bg-fabrica.png')">
+          <div class="el__overflow">
+            <div class="el__bg"></div>
+            <div class="el__preview-cont">
+              <h2 class="el__heading">Fábrica de Galpões</h2>
+            </div>
+            <div class="el__content">
+              <div class="el__close-btn"></div>
+              <div class="el__text">Fábrica de Galpões</div>
+              <p class="font-space text-white/80 mb-8 max-w-md text-sm md:text-lg">Desenvolvimento corporativo robusto para setor industrial.</p>
+              <a href="https://fabricadegalpoes.com.br/" target="_blank" class="border border-white/30 bg-purple-700 text-white font-syne font-bold px-6 py-3 md:px-8 md:py-4 hover:bg-white hover:text-black transition-all duration-300 transform hover:-translate-y-1">
+                VISITAR PROJETO
+              </a>
+            </div>
+            <div class="el__index">1</div>
+          </div>
+        </div>
+
+        <div class="el" style="--bg-img: url('/okto/IMG/pets-top.png')">
+          <div class="el__overflow">
+            <div class="el__bg"></div>
+            <div class="el__preview-cont">
+              <h2 class="el__heading">PetStop</h2>
+            </div>
+            <div class="el__content">
+              <div class="el__close-btn"></div>
+              <div class="el__text">PetStop</div>
+              <p class="font-space text-white/80 mb-8 max-w-md text-sm md:text-lg">E-commerce e serviços completos para o mundo pet.</p>
+              <a href="https://petstop.lucasfsl.com.br/" target="_blank" class="border border-white/30 bg-purple-700 text-white font-syne font-bold px-6 py-3 md:px-8 md:py-4 hover:bg-white hover:text-black transition-all duration-300 transform hover:-translate-y-1">
+                VISITAR PROJETO
+              </a>
+            </div>
+            <div class="el__index">2</div>
+          </div>
+        </div>
+
+        <div class="el" style="--bg-img: url('/okto/IMG/forest.png')">
+          <div class="el__overflow">
+            <div class="el__bg"></div>
+            <div class="el__preview-cont">
+              <h2 class="el__heading">Forest</h2>
+            </div>
+            <div class="el__content">
+              <div class="el__close-btn"></div>
+              <div class="el__text">Forest</div>
+              <p class="font-space text-white/80 mb-8 max-w-md text-sm md:text-lg">Design minimalista focado em natureza e sustentabilidade.</p>
+              <a href="https://forest.lucasfsl.com.br/" target="_blank" class="border border-white/30 bg-purple-700 text-white font-syne font-bold px-6 py-3 md:px-8 md:py-4 hover:bg-white hover:text-black transition-all duration-300 transform hover:-translate-y-1">
+                VISITAR PROJETO
+              </a>
+            </div>
+            <div class="el__index">3</div>
+          </div>
+        </div>
+
+        <div class="el" style="--bg-img: url('/okto/IMG/bikecraft.png')">
+          <div class="el__overflow">
+            <div class="el__bg"></div>
+            <div class="el__preview-cont">
+              <h2 class="el__heading">Bikecraft</h2>
+            </div>
+            <div class="el__content">
+              <div class="el__close-btn"></div>
+              <div class="el__text">Bikecraft</div>
+              <p class="font-space text-white/80 mb-8 max-w-md text-sm md:text-lg">Bicicletas personalizadas de alta performance.</p>
+              <a href="https://bikecraft.lucasfsl.com.br/" target="_blank" class="border border-white/30 bg-purple-700 text-white font-syne font-bold px-6 py-3 md:px-8 md:py-4 hover:bg-white hover:text-black transition-all duration-300 transform hover:-translate-y-1">
+                VISITAR PROJETO
+              </a>
+            </div>
+            <div class="el__index">4</div>
+          </div>
+        </div>
+
+        <div class="el" style="--bg-img: url('/okto/IMG/Maria.png')">
+          <div class="el__overflow">
+            <div class="el__bg"></div>
+            <div class="el__preview-cont">
+              <h2 class="el__heading">Maria Porta do Céu</h2>
+            </div>
+            <div class="el__content">
+              <div class="el__close-btn"></div>
+              <div class="el__text">Maria Porta do Céu</div>
+              <p class="font-space text-white/80 mb-8 max-w-md text-sm md:text-lg">Site institucional religioso com design clássico.</p>
+              <a href="https://mariaportadoceu.lucasfsl.com.br/" target="_blank" class="border border-white/30 bg-purple-700 text-white font-syne font-bold px-6 py-3 md:px-8 md:py-4 hover:bg-white hover:text-black transition-all duration-300 transform hover:-translate-y-1">
+                VISITAR PROJETO
+              </a>
+            </div>
+            <div class="el__index">5</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <footer class="bg-white text-black pt-20 pb-10 relative overflow-hidden z-10">
+      
+      <div class="w-full flex justify-center items-center overflow-hidden border-b border-black/10 pb-10">
+        <h1 class="footer-big-text font-space font-extrabold text-[44vw] leading-none tracking-tighter select-none text-black translate-y-[20%]">
+          OKTO
+        </h1>
+      </div>
+
+      <div class="max-w-[1600px] mx-auto px-6 md:px-16 mt-16 grid grid-cols-1 md:grid-cols-12 gap-10">
+        
+        <div class="md:col-span-4 flex flex-col justify-between">
+          <div>
+            <h3 class="font-syne font-bold text-3xl mb-4">OKTO<span class="text-purple-600">.</span></h3>
+            <p class="font-space text-lg opacity-60 max-w-xs">
+              Transformando códigos em experiências digitais imersivas e lucrativas.
+            </p>
+          </div>
+        </div>
+
+        <div class="md:col-span-2">
+          <h4 class="font-syne font-bold text-lg mb-6 uppercase tracking-wider">Menu</h4>
+          <ul class="flex flex-col gap-3 font-space text-lg">
+            <li><a href="#" class="hover:text-purple-600 transition-colors">Projetos</a></li>
+            <li><a href="#" class="hover:text-purple-600 transition-colors">Serviços</a></li>
+            <li><a href="#" class="hover:text-purple-600 transition-colors">Sobre</a></li>
+            <li><a href="#" class="hover:text-purple-600 transition-colors">Contato</a></li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-2">
+          <h4 class="font-syne font-bold text-lg mb-6 uppercase tracking-wider">Social</h4>
+          <ul class="flex flex-col gap-3 font-space text-lg">
+            <li><a href="#" class="hover:text-purple-600 transition-colors flex items-center gap-2 group"><span class="iconify" data-icon="mdi:instagram"></span> Instagram</a></li>
+            <li><a href="#" class="hover:text-purple-600 transition-colors flex items-center gap-2 group"><span class="iconify" data-icon="mdi:linkedin"></span> LinkedIn</a></li>
+            <li><a href="#" class="hover:text-purple-600 transition-colors flex items-center gap-2 group"><span class="iconify" data-icon="mdi:github"></span> GitHub</a></li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-4 md:text-right flex flex-col justify-end">
+          <a href="mailto:contato@okto.com" class="font-syne font-bold text-2xl md:text-3xl hover:text-purple-600 transition-colors mb-6">
+            contato@okto.ag
+          </a>
+          <div class="font-space text-sm opacity-50 mt-auto">
+            <p>&copy; 2024 OKTO Agency.</p>
+            <p>Todos os direitos reservados.</p>
+          </div>
+        </div>
+
+      </div>
+    </footer>
+
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    
+    <script>
+      // 1. Lenis (Scroll Suave)
+      const lenis = new Lenis()
+      lenis.on('scroll', ScrollTrigger.update)
+      gsap.ticker.add((time) => { lenis.raf(time * 500) })
+      gsap.ticker.lagSmoothing(0)
+
+      // 2. Animação Footer (Parallax Texto)
+      document.addEventListener("DOMContentLoaded", () => {
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.to(".footer-big-text", {
+          scrollTrigger: {
+            trigger: "footer",
+            start: "top bottom",
+            end: "bottom bottom",
+            scrub: 1
+          },
+          y: 0,
+          scale: 1.05,
+          ease: "power1.out"
+        });
+      });
+
+      // 3. Lógica Expanding Cards
+      const cont = document.querySelector('.cont');
+      const elsArr = [].slice.call(document.querySelectorAll('.el'));
+      const closeBtnsArr = [].slice.call(document.querySelectorAll('.el__close-btn'));
+
+      setTimeout(function() {
+        cont.classList.remove('s--inactive');
+      }, 200);
+
+      elsArr.forEach(function(el) {
+        el.addEventListener('click', function() {
+          if (this.classList.contains('s--active')) return;
+          cont.classList.add('s--el-active');
+          this.classList.add('s--active');
+        });
+      });
+
+      closeBtnsArr.forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          cont.classList.remove('s--el-active');
+          document.querySelector('.el.s--active').classList.remove('s--active');
+        });
+      });
+
+      // 4. Cursor Canvas (Apenas Desktop > 1024px)
+      if (window.innerWidth >= 1024) {
+        const canvas = document.querySelector("#canvas-cursor");
+        const ctx = canvas.getContext('2d');
+        let mouseMoved = false;
+        const pointer = { x: .5 * window.innerWidth, y: .5 * window.innerHeight }
+        const params = { pointsNumber: 40, widthFactor: .3, mouseThreshold: .6, spring: .4, friction: .5 };
+        const trail = new Array(params.pointsNumber);
+        for (let i = 0; i < params.pointsNumber; i++) { trail[i] = { x: pointer.x, y: pointer.y, dx: 0, dy: 0 } }
+        
+        window.addEventListener("click", e => updateMousePosition(e.clientX, e.clientY));
+        window.addEventListener("mousemove", e => { mouseMoved = true; updateMousePosition(e.clientX, e.clientY); });
+        
+        function updateMousePosition(eX, eY) { pointer.x = eX; pointer.y = eY; }
+        function setupCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+
+        function update(t) {
+            if (!mouseMoved) { pointer.x = (.5 + .3 * Math.cos(.002 * t) * (Math.sin(.005 * t))) * window.innerWidth; pointer.y = (.5 + .2 * (Math.cos(.005 * t)) + .1 * Math.cos(.01 * t)) * window.innerHeight; }
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.strokeStyle = "white"; 
+            trail.forEach((p, pIdx) => {
+                const prev = pIdx === 0 ? pointer : trail[pIdx - 1];
+                const spring = pIdx === 0 ? .4 * params.spring : params.spring;
+                p.dx += (prev.x - p.x) * spring;
+                p.dy += (prev.y - p.y) * spring;
+                p.dx *= params.friction; p.dy *= params.friction; p.x += p.dx; p.y += p.dy;
+            });
+            ctx.lineCap = "round"; ctx.beginPath(); ctx.moveTo(trail[0].x, trail[0].y);
+            for (let i = 1; i < trail.length - 1; i++) { const xc = .5 * (trail[i].x + trail[i + 1].x); const yc = .5 * (trail[i].y + trail[i + 1].y); ctx.quadraticCurveTo(trail[i].x, trail[i].y, xc, yc); ctx.lineWidth = params.widthFactor * (params.pointsNumber - i); ctx.stroke(); }
+            ctx.lineTo(trail[trail.length - 1].x, trail[trail.length - 1].y); ctx.stroke();
+            window.requestAnimationFrame(update);
+        }
+        setupCanvas(); update(0); window.addEventListener("resize", setupCanvas);
+      }
+    </script>
+
+  </body>
+</html>
