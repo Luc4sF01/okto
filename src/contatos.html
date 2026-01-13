@@ -3,253 +3,303 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sobre Nós - OKTO</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 
     <style>
-      /* --- GLOBAIS --- */
-      .font-syne { font-family: 'Syne', sans-serif; }
-      .font-space { font-family: 'Space Grotesk', sans-serif; }
-      
+      :root {
+        --color-purple: #5B00E2;
+        --color-dark: #050505;
+        --color-light: #ffffff;
+      }
+
       body { 
-        background-color: #050505; 
-        color: #fff;
-        margin: 0;
+        background-color: var(--color-dark); 
+        color: var(--color-light);
+        font-family: 'Space Grotesk', sans-serif;
         overflow-x: hidden;
       }
 
-      /* Efeito de Ruído (Noise) no Fundo para dar textura */
-      .bg-noise {
-        position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
-        pointer-events: none;
-        z-index: 0;
-        opacity: 0.05;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      /* Scrollbar */
+      ::-webkit-scrollbar { width: 8px; }
+      ::-webkit-scrollbar-track { background: #000; }
+      ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+      ::-webkit-scrollbar-thumb:hover { background: var(--color-purple); }
+
+      /* --- CARDS CSS (GLASS & STACK) --- */
+      .glass-card {
+        background: rgba(255, 255, 255, 0.02);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
       }
 
-      /* Marquee (Texto correndo) */
-      .marquee-container {
+      /* A MÁGICA DO STICKY STACKING */
+      /* Essa lógica faz os cards se empilharem nativamente sem JS complexo */
+      .stack-area {
         display: flex;
-        overflow: hidden;
-        user-select: none;
-        gap: 2rem;
+        flex-direction: column;
+        align-items: center;
+        padding-bottom: 10vh;
       }
-      .marquee-content {
-        flex-shrink: 0;
-        display: flex;
-        justify-content: space-around;
-        min-width: 100%;
-        gap: 2rem;
-        animation: scroll 20s linear infinite;
-      }
-      @keyframes scroll {
-        from { transform: translateX(0); }
-        to { transform: translateX(-100%); }
-      }
-
-      /* Inputs */
-      .form-input {
+      
+      .stack-card {
+        position: sticky;
+        top: 150px; /* Distância do topo onde o card 'cola' */
         width: 100%;
-        background: rgba(255,255,255,0.03);
-        border: 1px solid rgba(255,255,255,0.1);
-        padding: 1.2rem 1rem;
-        color: white;
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 1rem;
-        transition: all 0.3s ease;
+        max-width: 1100px;
+        height: 60vh; /* Altura do card */
+        min-height: 500px;
+        margin-bottom: 5vh; /* Espaço para o próximo card */
+        border-radius: 24px;
+        background: #0F0F0F;
+        border: 1px solid rgba(255,255,255,0.08);
+        overflow: hidden;
+        box-shadow: 0 -10px 60px rgba(0,0,0,0.8);
+        transform-origin: center top;
+        transition: transform 0.3s ease;
       }
-      .form-input:focus {
-        outline: none;
-        border-color: #5B00E2;
-        background: rgba(91, 0, 226, 0.05);
-      }
-      textarea { resize: none; }
 
-      /* Accordion (FAQ) */
-      details > summary {
-        list-style: none;
-        cursor: pointer;
+      /* Ajuste Mobile para os cards */
+      @media (max-width: 768px) {
+        .stack-card {
+          top: 100px; /* Cola mais perto do topo no celular */
+          height: auto;
+          min-height: 65vh;
+          padding-bottom: 2rem;
+        }
       }
-      details > summary::-webkit-details-marker {
-        display: none;
+
+      /* Detalhes visuais dos cards */
+      .card-number {
+        font-size: 120px;
+        line-height: 0.8;
+        font-weight: 700;
+        color: rgba(255,255,255,0.03);
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 0;
+        pointer-events: none;
       }
-      details[open] summary ~ * {
-        animation: sweep .3s ease-in-out;
+      @media (min-width: 768px) {
+        .card-number { font-size: 250px; bottom: -50px; right: -20px; top: auto; }
       }
-      @keyframes sweep {
-        0%    {opacity: 0; transform: translateY(-10px)}
-        100%  {opacity: 1; transform: translateY(0)}
+
+      /* --- FAQ & TIMELINE (Mantidos do anterior) --- */
+      .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; }
+      .faq-item.active .faq-answer { max-height: 300px; } 
+      .faq-icon { transition: transform 0.3s; }
+      .faq-item.active .faq-icon { transform: rotate(45deg); color: var(--color-purple); }
+      
+      .timeline-section { position: relative; padding-bottom: 100px; }
+      .timeline-line-container {
+        position: absolute; left: 28px; top: 0; bottom: 0; width: 2px;
+        background: rgba(255,255,255,0.1); z-index: 1;
       }
+      @media (min-width: 768px) { .timeline-line-container { left: 50%; transform: translateX(-50%); } }
+      .timeline-progress {
+        position: absolute; top: 0; left: 0; width: 100%; height: 0%;
+        background: var(--color-purple); box-shadow: 0 0 15px var(--color-purple);
+      }
+      .timeline-node { position: relative; z-index: 10; margin-bottom: 80px; opacity: 0.2; transition: opacity 0.5s ease; }
+      .timeline-node.active { opacity: 1; }
+      .node-dot { width: 16px; height: 16px; background: #000; border: 2px solid #555; border-radius: 50%; position: absolute; left: 21px; top: 0; transition: all 0.3s; }
+      @media (min-width: 768px) { .node-dot { left: 50%; transform: translateX(-50%); } }
+      .timeline-node.active .node-dot { background: var(--color-purple); border-color: #fff; box-shadow: 0 0 20px var(--color-purple); transform: translateX(-50%) scale(1.5); }
+      .node-content { padding-left: 60px; }
+      @media (min-width: 768px) {
+        .node-content { width: 45%; padding-left: 0; }
+        .node-left .node-content { margin-left: auto; text-align: right; margin-right: 55%; }
+        .node-right .node-content { margin-left: 55%; text-align: left; }
+      }
+
     </style>
-
-    <title>Contato - Okto</title>
   </head>
 
-  <body class="bg-[#050505]">
+  <body>
     
-    <div class="bg-noise"></div>
-
-    <header class="fixed top-0 left-0 w-full h-24 bg-[#050505]/80 backdrop-blur-xl border-b border-white/10 z-50 transition-all">
+    <header class="fixed top-0 left-0 w-full h-20 md:h-24 bg-black/90 backdrop-blur-md border-b border-white/5 z-50 transition-all">
       <div class="w-full flex items-center justify-between px-6 md:px-8 h-full max-w-[1600px] mx-auto">
-        <h1 class="font-syne text-[32px] md:text-[48px] text-white">
-          OKTO<span class="text-purple-700">.</span>
+        <h1 class="font-bold text-[28px] md:text-[40px] text-white">
+          <a href="index.html">OKTO<span class="text-[#5B00E2]">.</span></a>
         </h1>
-
         <nav class="hidden md:block">
           <ul class="flex gap-8">
-            <li><a class="font-syne text-white text-lg relative hover:text-purple-500 transition-colors" href="index.html">home</a></li>
-            <li><a class="font-syne text-white text-lg relative hover:text-purple-500 transition-colors" href="projetos.html">projetos</a></li>
-            <li><a class="font-syne text-white text-lg relative hover:text-purple-500 transition-colors" href="#">sobre nós</a></li>
-            <li><a class="font-syne text-purple-500 text-lg relative" href="#">contatos</a></li>
+            <li><a class="text-white text-lg hover:text-[#5B00E2] transition-colors" href="index.html">home</a></li>
+            <li><a class="text-white text-lg hover:text-[#5B00E2] transition-colors" href="index.html">projetos</a></li>
+            <li><a class="text-[#5B00E2] text-lg font-bold" href="#">sobre nós</a></li>
+            <li><a class="text-white text-lg hover:text-[#5B00E2] transition-colors" href="/src/contatos.html">contatos</a></li>
           </ul>
         </nav>
-
-        <div class="flex items-center gap-1">
-          <a class="font-syne font-bold bg-[#5B00E2] text-sm md:text-xl text-white px-4 md:px-6 py-2 ml-2 hover:bg-purple-800 transition delay-75 ease-in-out hover:translate-y-1 hover:scale-110" href="#">CONTATO</a>
-        </div>
+        <a class="font-bold bg-[#5B00E2] text-xs md:text-lg text-white px-4 md:px-5 py-2 hover:bg-[#4a00b8] transition transform hover:scale-105" href="#">CONTATO</a>
       </div>
     </header>
 
-    <div class="pt-32 pb-10 relative z-10 border-b border-white/5 bg-[#050505]">
-        <div class="marquee-container opacity-30 hover:opacity-100 transition-opacity duration-500">
-            <div class="marquee-content font-syne font-bold text-6xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-white/20 to-white/5 uppercase tracking-tighter">
-                <span>Vamos conversar</span> <span>Start a Project</span> <span>Vamos conversar</span> <span>Start a Project</span>
-            </div>
-            <div class="marquee-content font-syne font-bold text-6xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-white/20 to-white/5 uppercase tracking-tighter">
-                <span>Vamos conversar</span> <span>Start a Project</span> <span>Vamos conversar</span> <span>Start a Project</span>
-            </div>
-        </div>
-    </div>
+    <section class="relative pt-32 md:pt-48 pb-20 md:pb-32 px-6 md:px-16 min-h-[70vh] flex flex-col justify-end md:justify-center max-w-[1600px] mx-auto overflow-hidden">
+      <div class="absolute top-0 right-0 w-[60vw] h-[60vw] bg-[#5B00E2] opacity-[0.1] blur-[120px] rounded-full pointer-events-none translate-x-1/2 -translate-y-1/2"></div>
+      
+      <div class="relative z-10 hero-anim">
+        <span class="inline-block py-1 px-3 border border-white/20 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest mb-6 text-white/60">
+          Digital Agency • Est. 2024
+        </span>
+        <h1 class="font-bold text-4xl md:text-[6vw] leading-[1.1] md:leading-[0.9] mb-8 tracking-tighter uppercase">
+          Design que atrai.<br>
+          <span class="text-[#5B00E2]">Estratégia que vende.</span>
+        </h1>
+        <p class="max-w-2xl text-lg md:text-2xl text-white/60 leading-relaxed">
+          Nós unimos a criatividade visual com a engenharia de software para construir produtos digitais de alta performance.
+        </p>
+      </div>
+    </section>
 
-    <main class="py-20 px-6 md:px-16 relative z-10">
-      <div class="max-w-[1600px] mx-auto w-full">
+    <section class="relative bg-[#050505] pt-20 pb-40 px-4 md:px-10">
+      
+      <div class="max-w-[1600px] mx-auto text-center mb-24">
+        <h2 class="text-4xl md:text-7xl font-bold uppercase mb-6">Por que <span class="text-[#5B00E2]">nós?</span></h2>
+        <p class="text-white/50 text-lg max-w-xl mx-auto">Role para baixo e entenda a diferença de ter a OKTO no seu projeto.</p>
+      </div>
+
+      <div class="stack-area w-full">
         
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
-          
-          <div class="lg:col-span-5 flex flex-col gap-12">
-            
-            <div class="gsap-item">
-              <h2 class="font-syne font-bold text-4xl md:text-5xl text-white mb-6">
-                Tem um projeto <br>em mente?
-              </h2>
-              <p class="font-space text-white/60 text-lg leading-relaxed mb-8">
-                Estamos prontos para transformar sua visão em realidade digital de alta performance. Preencha o formulário ao lado ou chame direto.
+        <div class="stack-card" id="card-1">
+          <div class="card-number">01</div>
+          <div class="w-full h-full grid grid-cols-1 md:grid-cols-2">
+            <div class="p-8 md:p-16 flex flex-col justify-center relative z-10">
+              <div class="w-12 h-1 bg-[#5B00E2] mb-8"></div>
+              <h3 class="text-3xl md:text-5xl font-bold mb-6 text-white uppercase">Design<br>Autoral</h3>
+              <p class="text-white/60 text-lg leading-relaxed">
+                A maioria das agências usa templates prontos. Nós não. Desenhamos cada pixel baseado na identidade da sua marca. Seu site será único no mundo, impossível de ser ignorado ou copiado.
               </p>
-
-              <a href="https://wa.me/553498183877" target="_blank" class="inline-flex items-center justify-center gap-3 w-full md:w-auto bg-[#25D366] text-black font-syne font-bold text-lg py-4 px-8 rounded hover:bg-white hover:scale-105 transition-all duration-300">
-                <span class="iconify text-2xl" data-icon="logos:whatsapp-icon"></span>
-                Chamar no WhatsApp
-              </a>
             </div>
-
-            <div class="gsap-item border-t border-white/10 pt-8">
-              <h3 class="font-space text-sm text-purple-500 uppercase tracking-widest mb-6 font-bold">Dúvidas Frequentes</h3>
-              
-              <div class="flex flex-col gap-4">
-                <details class="group bg-white/5 border border-white/5 rounded-lg overflow-hidden transition-all duration-300 open:bg-white/10">
-                  <summary class="flex justify-between items-center p-5 font-syne font-bold text-white cursor-pointer select-none">
-                    Qual o prazo médio de entrega?
-                    <span class="iconify text-purple-500 transition-transform duration-300 group-open:rotate-180" data-icon="ph:caret-down-bold"></span>
-                  </summary>
-                  <div class="px-5 pb-5 pt-0 font-space text-white/70 text-sm leading-relaxed">
-                    Depende da complexidade. Landing pages levam de 5 a 10 dias úteis. Projetos completos podem variar de 20 a 45 dias.
-                  </div>
-                </details>
-
-                <details class="group bg-white/5 border border-white/5 rounded-lg overflow-hidden transition-all duration-300 open:bg-white/10">
-                  <summary class="flex justify-between items-center p-5 font-syne font-bold text-white cursor-pointer select-none">
-                    Vocês fazem manutenção depois?
-                    <span class="iconify text-purple-500 transition-transform duration-300 group-open:rotate-180" data-icon="ph:caret-down-bold"></span>
-                  </summary>
-                  <div class="px-5 pb-5 pt-0 font-space text-white/70 text-sm leading-relaxed">
-                    Sim! Oferecemos pacotes mensais de suporte, atualizações e monitoramento para garantir que seu site continue voando.
-                  </div>
-                </details>
-
-                <details class="group bg-white/5 border border-white/5 rounded-lg overflow-hidden transition-all duration-300 open:bg-white/10">
-                  <summary class="flex justify-between items-center p-5 font-syne font-bold text-white cursor-pointer select-none">
-                    O pagamento é parcelado?
-                    <span class="iconify text-purple-500 transition-transform duration-300 group-open:rotate-180" data-icon="ph:caret-down-bold"></span>
-                  </summary>
-                  <div class="px-5 pb-5 pt-0 font-space text-white/70 text-sm leading-relaxed">
-                    Trabalhamos com entrada + parcelas ou fluxo de projeto. Entre em contato para montarmos a melhor proposta para você.
-                  </div>
-                </details>
-              </div>
-            </div>
-
-            <div class="gsap-item">
-               <a href="mailto:contato@okto.ag" class="block font-syne font-bold text-2xl text-white hover:text-purple-500 transition-colors">contato@okto.ag</a>
-               <p class="font-space text-white/40 text-sm mt-1">Uberlândia, MG</p>
-            </div>
-
-          </div>
-
-          <div class="lg:col-span-7">
-            <div class="gsap-item bg-[#0A0A0A] p-8 md:p-12 border border-white/10 relative overflow-hidden">
-                <div class="absolute -top-24 -right-24 w-64 h-64 bg-purple-600/20 rounded-full blur-[80px] pointer-events-none"></div>
-
-                <h3 class="font-syne font-bold text-2xl text-white mb-8">Envie uma mensagem</h3>
-
-                <form action="#" class="flex flex-col gap-6">
-                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="flex flex-col gap-2">
-                        <label class="font-space text-xs uppercase tracking-widest text-white/50">Nome</label>
-                        <input type="text" class="form-input" placeholder="Seu nome completo">
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <label class="font-space text-xs uppercase tracking-widest text-white/50">Empresa</label>
-                        <input type="text" class="form-input" placeholder="Nome da sua empresa">
-                    </div>
-                  </div>
-
-                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="flex flex-col gap-2">
-                        <label class="font-space text-xs uppercase tracking-widest text-white/50">Email</label>
-                        <input type="email" class="form-input" placeholder="seu@email.com">
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <label class="font-space text-xs uppercase tracking-widest text-white/50">Telefone</label>
-                        <input type="tel" class="form-input" placeholder="(00) 00000-0000">
-                    </div>
-                  </div>
-
-                  <div class="flex flex-col gap-2 mt-4">
-                    <label class="font-space text-xs uppercase tracking-widest text-white/50">Mensagem</label>
-                    <textarea class="form-input bg-transparent border border-white/10 p-4" rows="5" placeholder="Conte um pouco sobre o que você precisa..."></textarea>
-                  </div>
-
-                  <button type="submit" class="mt-4 bg-white hover:bg-purple-600 text-black hover:text-white font-syne font-bold text-lg py-5 px-10 transition-all duration-300 flex justify-between items-center group">
-                    ENVIAR PROPOSTA
-                    <span class="iconify text-xl group-hover:translate-x-2 transition-transform" data-icon="ph:arrow-right-bold"></span>
-                  </button>
-                </form>
+            <div class="relative h-64 md:h-full bg-gradient-to-br from-[#111] to-[#000] border-l border-white/5 flex items-center justify-center overflow-hidden">
+              <div class="absolute w-[300px] h-[300px] bg-[#5B00E2] rounded-full blur-[100px] opacity-20 animate-pulse"></div>
+              <span class="iconify text-[#5B00E2] text-8xl md:text-9xl relative z-10" data-icon="mdi:palette-outline"></span>
             </div>
           </div>
+        </div>
 
+        <div class="stack-card" id="card-2">
+          <div class="card-number">02</div>
+          <div class="w-full h-full grid grid-cols-1 md:grid-cols-2">
+            <div class="p-8 md:p-16 flex flex-col justify-center relative z-10">
+              <div class="w-12 h-1 bg-white mb-8"></div>
+              <h3 class="text-3xl md:text-5xl font-bold mb-6 text-white uppercase">Performance<br>Extrema</h3>
+              <p class="text-white/60 text-lg leading-relaxed">
+                Site bonito que demora a carregar perde venda. Usamos <strong>Next.js e React</strong>, as mesmas tecnologias do Facebook e Uber, para garantir carregamento instantâneo e nota máxima no Google.
+              </p>
+            </div>
+            <div class="relative h-64 md:h-full bg-gradient-to-br from-[#151515] to-[#050505] border-l border-white/5 flex items-center justify-center overflow-hidden">
+               <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 20px 20px;"></div>
+               <span class="iconify text-white text-8xl md:text-9xl relative z-10" data-icon="mdi:lightning-bolt-outline"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stack-card" style="border-color: #5B00E2;" id="card-3">
+          <div class="card-number text-white/10">03</div>
+          <div class="w-full h-full grid grid-cols-1 md:grid-cols-2">
+            <div class="p-8 md:p-16 flex flex-col justify-center relative z-10">
+              <div class="w-12 h-1 bg-[#5B00E2] mb-8"></div>
+              <h3 class="text-3xl md:text-5xl font-bold mb-6 text-white uppercase">Foco em<br>Conversão</h3>
+              <p class="text-white/70 text-lg leading-relaxed">
+                Não fazemos "vitrines". Fazemos máquinas de venda. Estruturamos a navegação, os botões e os textos (Copywriting) para guiar o visitante até o botão de compra ou contato.
+              </p>
+            </div>
+            <div class="relative h-64 md:h-full bg-[#5B00E2] flex items-center justify-center overflow-hidden">
+               <div class="absolute w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+               <div class="text-center">
+                 <span class="iconify text-white text-8xl md:text-9xl mb-4 inline-block" data-icon="mdi:chart-line-variant"></span>
+                 <p class="font-bold text-white uppercase tracking-widest">ROI Garantido</p>
+               </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="relative py-20 md:py-32 bg-[#050505]">
+      <div class="max-w-[1600px] mx-auto px-6 md:px-16 mb-16 md:mb-24 text-center">
+        <h2 class="text-3xl md:text-5xl font-bold mb-4 uppercase">Processo OKTO</h2>
+        <p class="text-white/60">Simples. Transparente. Ágil.</p>
+      </div>
+      <div class="relative max-w-[1200px] mx-auto timeline-section">
+        <div class="timeline-line-container"><div class="timeline-progress"></div></div>
+        
+        <div class="timeline-node node-left flex flex-col md:block">
+          <div class="node-dot"></div>
+          <div class="node-content">
+            <span class="text-[#5B00E2] font-bold text-xl mb-2 block">01.</span>
+            <h3 class="text-2xl font-bold mb-2 uppercase">Briefing</h3>
+            <p class="text-white/70">Entendemos seu negócio e definimos as metas.</p>
+          </div>
+        </div>
+
+        <div class="timeline-node node-right flex flex-col md:block">
+          <div class="node-dot"></div>
+          <div class="node-content">
+            <span class="text-[#5B00E2] font-bold text-xl mb-2 block">02.</span>
+            <h3 class="text-2xl font-bold mb-2 uppercase">UI/UX Design</h3>
+            <p class="text-white/70">Criação do layout visual para sua aprovação.</p>
+          </div>
+        </div>
+
+        <div class="timeline-node node-left flex flex-col md:block">
+          <div class="node-dot"></div>
+          <div class="node-content">
+            <span class="text-[#5B00E2] font-bold text-xl mb-2 block">03.</span>
+            <h3 class="text-2xl font-bold mb-2 uppercase">Desenvolvimento</h3>
+            <p class="text-white/70">Codificação do sistema com tecnologias modernas.</p>
+          </div>
+        </div>
+
+        <div class="timeline-node node-right flex flex-col md:block">
+          <div class="node-dot"></div>
+          <div class="node-content">
+            <span class="text-[#5B00E2] font-bold text-xl mb-2 block">04.</span>
+            <h3 class="text-2xl font-bold mb-2 uppercase">Entrega</h3>
+            <p class="text-white/70">Testes finais, deploy e treinamento.</p>
+          </div>
         </div>
       </div>
-    </main>
+    </section>
 
-    <footer class="bg-white text-black pt-20 pb-10 relative overflow-hidden z-10">
-      <div class="w-full flex justify-center items-center overflow-hidden border-b border-black/10 pb-10">
-        <h1 class="footer-big-text font-syne font-extrabold text-[22vw] leading-none tracking-tighter select-none text-black translate-y-[20%]">OKTO</h1>
-      </div>
-      <div class="max-w-[1600px] mx-auto px-6 md:px-16 mt-16 grid grid-cols-1 md:grid-cols-12 gap-10">
-        <div class="md:col-span-4 flex flex-col justify-between">
-          <div><h3 class="font-syne font-bold text-3xl mb-4">OKTO<span class="text-purple-600">.</span></h3><p class="font-space text-lg opacity-60 max-w-xs">Transformando códigos em experiências digitais imersivas.</p></div>
+    <section class="py-16 bg-[#080808] border-t border-white/5">
+      <div class="max-w-[800px] mx-auto px-6">
+        <h2 class="text-3xl font-bold text-white mb-10 text-center uppercase">Perguntas Frequentes</h2>
+        
+        <div class="flex flex-col gap-4">
+          <div class="faq-item border-b border-white/10 pb-4 cursor-pointer" onclick="toggleFaq(this)">
+            <div class="flex justify-between items-center py-2">
+              <h3 class="text-lg font-bold text-white hover:text-[#5B00E2] transition-colors">Qual o prazo de entrega?</h3>
+              <span class="faq-icon text-2xl text-[#5B00E2]">+</span>
+            </div>
+            <div class="faq-answer"><p class="text-white/60 pt-2">Depende do projeto. Sites institucionais levam cerca de 15 a 20 dias. E-commerces, cerca de 30 a 45 dias.</p></div>
+          </div>
+
+          <div class="faq-item border-b border-white/10 pb-4 cursor-pointer" onclick="toggleFaq(this)">
+            <div class="flex justify-between items-center py-2">
+              <h3 class="text-lg font-bold text-white hover:text-[#5B00E2] transition-colors">Vocês fazem manutenção?</h3>
+              <span class="faq-icon text-2xl text-[#5B00E2]">+</span>
+            </div>
+            <div class="faq-answer"><p class="text-white/60 pt-2">Sim! Temos planos mensais para manter seu site seguro, atualizado e com backups em dia.</p></div>
+          </div>
         </div>
-        <div class="md:col-span-2"><h4 class="font-syne font-bold text-lg mb-6 uppercase tracking-wider">Menu</h4><ul class="flex flex-col gap-3 font-space text-lg"><li><a href="#" class="hover:text-purple-600 transition-colors">Projetos</a></li><li><a href="#" class="hover:text-purple-600 transition-colors">Serviços</a></li><li><a href="#" class="hover:text-purple-600 transition-colors">Sobre</a></li><li><a href="#" class="hover:text-purple-600 transition-colors">Contato</a></li></ul></div>
-        <div class="md:col-span-2"><h4 class="font-syne font-bold text-lg mb-6 uppercase tracking-wider">Social</h4><ul class="flex flex-col gap-3 font-space text-lg"><li><a href="#" class="hover:text-purple-600 transition-colors flex items-center gap-2"><span class="iconify" data-icon="mdi:instagram"></span> Instagram</a></li><li><a href="#" class="hover:text-purple-600 transition-colors flex items-center gap-2"><span class="iconify" data-icon="mdi:linkedin"></span> LinkedIn</a></li></ul></div>
-        <div class="md:col-span-4 md:text-right flex flex-col justify-end"><a href="mailto:contato@okto.com" class="font-syne font-bold text-2xl md:text-3xl hover:text-purple-600 transition-colors mb-6">contato@okto.ag</a><div class="font-space text-sm opacity-50 mt-auto"><p>&copy; 2024 OKTO Agency.</p></div></div>
+      </div>
+    </section>
+
+    <footer class="bg-white text-black pt-20 pb-10 overflow-hidden">
+      <div class="w-full flex justify-center border-b border-black/10 pb-10">
+        <h1 class="footer-big-text font-extrabold text-[25vw] leading-none tracking-tighter select-none text-black">OKTO</h1>
+      </div>
+      <div class="max-w-[1600px] mx-auto px-6 mt-10 text-center md:text-left flex flex-col md:flex-row justify-between items-center">
+        <p class="opacity-60 font-bold">© 2024 OKTO Agency.</p>
+        <a href="mailto:contato@okto.ag" class="font-bold text-2xl mt-4 md:mt-0 hover:text-[#5B00E2]">contato@okto.ag</a>
       </div>
     </footer>
 
@@ -259,42 +309,58 @@
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     
     <script>
-      // 1. Lenis Smooth Scroll
+      // 1. Lenis Smooth Scroll (Essencial para o efeito premium)
       const lenis = new Lenis()
       lenis.on('scroll', ScrollTrigger.update)
-      gsap.ticker.add((time) => { lenis.raf(time * 500) })
+      gsap.ticker.add((time) => { lenis.raf(time * 1000) })
       gsap.ticker.lagSmoothing(0)
 
-      document.addEventListener("DOMContentLoaded", () => {
-        gsap.registerPlugin(ScrollTrigger);
+      gsap.registerPlugin(ScrollTrigger);
 
-        // 2. Animação de Entrada dos Itens
-        gsap.from(".gsap-item", {
-          y: 50,
-          opacity: 0,
-          duration: 1,
-          stagger: 0.15,
-          ease: "power3.out",
+      // 2. Animação Hero
+      gsap.from(".hero-anim h1", { y: 50, opacity: 0, duration: 1, ease: "power3.out", delay: 0.2 });
+
+      // 3. ANIMAÇÃO DOS CARDS (STACKING)
+      // O efeito "Sticky" principal é feito via CSS.
+      // O GSAP aqui serve apenas para dar um leve "Scale" quando o card entra.
+      const cards = document.querySelectorAll('.stack-card');
+      
+      cards.forEach((card, index) => {
+        gsap.from(card, {
+          scale: 0.9,
+          opacity: 0.5,
           scrollTrigger: {
-            trigger: "main",
-            start: "top 80%"
+            trigger: card,
+            start: "top 90%", // Começa a animar quando o topo do card entra na tela
+            end: "top 60%",
+            scrub: true
           }
         });
+      });
 
-        // 3. Footer Parallax
-        gsap.to(".footer-big-text", {
-          scrollTrigger: {
-            trigger: "footer",
-            start: "top bottom",
-            end: "bottom bottom",
-            scrub: 1
-          },
-          y: 0,
-          scale: 1.05,
-          ease: "power1.out"
+      // 4. Timeline
+      const progressLine = document.querySelector('.timeline-progress');
+      const timelineSection = document.querySelector('.timeline-section');
+      const nodes = document.querySelectorAll('.timeline-node');
+
+      gsap.to(progressLine, {
+        height: "100%",
+        scrollTrigger: { trigger: timelineSection, start: "top center", end: "bottom center", scrub: 1 },
+        ease: "none"
+      });
+
+      nodes.forEach((node) => {
+        gsap.to(node, {
+          scrollTrigger: { trigger: node, start: "top 70%", end: "bottom 70%", toggleClass: "active", toggleActions: "play none none reverse" }
         });
       });
-    </script>
 
+      // 5. FAQ
+      function toggleFaq(element) {
+        element.classList.toggle('active');
+        // Fecha os outros (opcional, removi para mobile ser mais fácil de usar)
+      }
+
+    </script>
   </body>
 </html>
