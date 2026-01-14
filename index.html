@@ -116,7 +116,7 @@
             <li>
               <a
                 class="font-syne text-white text-[24px] relative hover:text-purple-500 transition-colors after:content-[''] after:block after:h-0.5 after:w-0 after:bg-purple-800 after:transition-all after:duration-500 after:absolute hover:after:w-full"
-                href="/src/projetos.html"
+                href="/projetos.html"
                 >projetos</a
               >
             </li>
@@ -124,14 +124,14 @@
             <li>
               <a
                 class="font-syne relative text-white text-[24px] hover:text-purple-500 transition-colors after:content-[''] after:block after:h-0.5 after:w-0 after:bg-purple-800 after:transition-all after:duration-500 after:absolute hover:after:w-full"
-                href="/src/sobre.html"
+                href="/sobre.html"
                 >sobre nós</a
               >
             </li>
             <li>
               <a
                 class="font-syne relative text-white text-[24px] hover:text-purple-500 transition-colors after:content-[''] after:block after:h-0.5 after:w-0 after:bg-purple-800 after:transition-all after:duration-500 after:absolute hover:after:w-full"
-                href="/src/contatos.html"
+                href="/contatos.html"
                 >contatos</a
               >
             </li>
@@ -181,7 +181,7 @@
         <li>
           <a
             class="mobile-link font-syne text-white text-4xl hover:text-purple-500"
-            href="/src/projetos.html"
+            href="/projetos.html"
             >projetos</a
           >
         </li>
@@ -189,14 +189,14 @@
         <li>
           <a
             class="mobile-link font-syne text-white text-4xl hover:text-purple-500"
-            href="/src/sobre.html"
+            href="/sobre.html"
             >sobre nós</a
           >
         </li>
         <li>
           <a
             class="mobile-link font-syne text-white text-4xl hover:text-purple-500"
-            href="/src/contatos.html"
+            href="/contatos.html"
             >contatos</a
           >
         </li>
@@ -242,16 +242,18 @@
           </p>
 
           <div class="flex flex-col sm:flex-row gap-4">
-            <button
-              class="bg-white text-black font-bold font-syne px-6 py-4 hover:bg-gray-200 text-center transition delay-75 ease-in-out hover:translate-y-0.5 hover:scale-100 w-full sm:w-auto"
+            <a
+              href="/projetos.html"
+              class="bg-white text-black font-bold font-syne px-6 py-4 hover:bg-gray-200 text-center transition delay-75 ease-in-out hover:translate-y-0.5 hover:scale-100 w-full sm:w-auto flex items-center justify-center"
             >
               VEJA NOSSOS TRABALHOS
-            </button>
-            <button
-              class="border border-white/20 bg-purple-700 font-bold font-syne text-white px-8 py-4 hover:bg-purple-600 text-center transition delay-75 ease-in-out hover:translate-y-0.5 hover:scale-100 w-full sm:w-auto"
+            </a>
+            <a
+              href="/contatos.html"
+              class="border border-white/20 bg-purple-700 font-bold font-syne text-white px-8 py-4 hover:bg-purple-600 text-center transition delay-75 ease-in-out hover:translate-y-0.5 hover:scale-100 w-full sm:w-auto flex items-center justify-center"
             >
               CONTATO
-            </button>
+            </a>
           </div>
         </div>
 
@@ -667,91 +669,76 @@
 
     <section
       id="contato"
-      class="bg-black py-16 md:py-24 px-6 md:px-16 border-t border-white/10 relative overflow-hidden"
+      class="bg-black py-20 md:py-32 px-6 md:px-16 border-t border-white/10 relative overflow-hidden"
     >
       <div
-        class="max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center"
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-900/20 rounded-full blur-[120px] pointer-events-none"
+      ></div>
+
+      <div
+        class="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center"
       >
-        <div class="w-full">
-          <h2
-            class="font-syne font-bold text-white text-4xl md:text-5xl mb-8 md:mb-12 leading-tight"
+        <div class="lg:col-span-7 flex flex-col items-start relative z-10">
+          <span
+            class="font-space text-purple-500 uppercase tracking-widest text-sm font-bold mb-4"
           >
-            Vamos criar algo <br />
-            <span class="text-purple-700">incrível</span> juntos?
+            /// Vamos começar?
+          </span>
+
+          <h2
+            class="font-space font-extrabold text-white text-5xl md:text-7xl lg:text-8xl leading-[0.9] mb-8"
+          >
+            Tire sua ideia<br />
+            do
+            <span
+              class="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-white"
+              >papel.</span
+            >
           </h2>
 
-          <form class="flex flex-col gap-8">
-            <div class="relative w-full group">
-              <input
-                type="text"
-                id="nome"
-                class="peer block w-full bg-transparent border-b border-white/30 py-4 text-white font-space text-xl focus:outline-none focus:border-purple-600 transition-colors placeholder-transparent"
-                placeholder=" "
-                required
-              />
-              <label
-                for="nome"
-                class="absolute left-0 top-4 text-white/50 font-space text-xl transition-all duration-300 pointer-events-none peer-placeholder-shown:top-4 peer-placeholder-shown:text-xl peer-placeholder-shown:text-white/50 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-purple-500 peer-valid:-top-6 peer-valid:text-sm peer-valid:text-purple-500"
-              >
-                Seu Nome
-              </label>
-            </div>
+          <p
+            class="font-space text-white/60 text-lg md:text-xl max-w-xl mb-10 leading-relaxed"
+          >
+            Você tem a visão, nós temos a tecnologia. Clique abaixo, preencha o
+            briefing rápido e receba uma proposta personalizada da nossa equipe.
+          </p>
 
-            <div class="relative w-full group">
-              <input
-                type="email"
-                id="email"
-                class="peer block w-full bg-transparent border-b border-white/30 py-4 text-white font-space text-xl focus:outline-none focus:border-purple-600 transition-colors placeholder-transparent"
-                placeholder=" "
-                required
-              />
-              <label
-                for="email"
-                class="absolute left-0 top-4 text-white/50 font-space text-xl transition-all duration-300 pointer-events-none peer-placeholder-shown:top-4 peer-placeholder-shown:text-xl peer-placeholder-shown:text-white/50 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-purple-500 peer-valid:-top-6 peer-valid:text-sm peer-valid:text-purple-500"
-              >
-                Seu E-mail
-              </label>
-            </div>
-
-            <div class="relative w-full group">
-              <textarea
-                id="mensagem"
-                rows="4"
-                class="peer block w-full bg-transparent border-b border-white/30 py-4 text-white font-space text-xl focus:outline-none focus:border-purple-600 transition-colors placeholder-transparent resize-none"
-                placeholder=" "
-                required
-              ></textarea>
-              <label
-                for="mensagem"
-                class="absolute left-0 top-4 text-white/50 font-space text-xl transition-all duration-300 pointer-events-none peer-placeholder-shown:top-4 peer-placeholder-shown:text-xl peer-placeholder-shown:text-white/50 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-purple-500 peer-valid:-top-6 peer-valid:text-sm peer-valid:text-purple-500"
-              >
-                Sobre o que vamos conversar?
-              </label>
-            </div>
-
-            <div class="mt-4">
-              <button
-                type="submit"
-                class="w-full md:w-auto border border-white/20 bg-purple-700 font-bold font-syne text-white px-10 py-5 text-lg hover:bg-purple-600 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(126,34,206,0.4)]"
-              >
-                ENVIAR MENSAGEM
-              </button>
-            </div>
-          </form>
+          <div class="flex flex-col sm:flex-row gap-6 w-full sm:w-auto">
+            <a
+              href="/contatos.html"
+              class="group relative bg-white text-black font-syne font-bold text-xl px-10 py-5 overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-[0_0_40px_rgba(255,255,255,0.3)] text-center sm:text-left inline-flex items-center justify-center gap-3"
+            >
+              <span class="relative z-10">INICIAR PROJETO</span>
+              <span
+                class="iconify relative z-10 text-2xl transition-transform group-hover:translate-x-1"
+                data-icon="mdi:arrow-right"
+              ></span>
+              <div
+                class="absolute inset-0 bg-purple-500 transform scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100 -z-0"
+              ></div>
+              <div
+                class="absolute inset-0 group-hover:bg-transparent z-0 transition-colors duration-300"
+              ></div>
+            </a>
+          </div>
         </div>
 
         <div
-          class="relative flex justify-center items-center h-[300px] md:h-[400px] lg:h-[600px] order-first lg:order-last"
+          class="lg:col-span-5 h-[350px] md:h-[500px] flex justify-center items-center relative order-first lg:order-last"
         >
           <div
-            class="absolute w-[200px] md:w-[300px] h-[200px] md:h-[300px] bg-purple-900/30 rounded-full blur-[80px] md:blur-[100px] -z-10"
+            class="absolute inset-0 border border-white/5 rounded-full scale-90 animate-pulse"
           ></div>
+          <div
+            class="absolute inset-0 border border-white/5 rounded-full scale-75"
+          ></div>
+
           <lottie-player
-            class="transition-transform duration-500 hover:scale-125 cursor-pointer"
+            class="relative z-10 drop-shadow-[0_0_50px_rgba(91,33,182,0.5)]"
             src="/IMG/okto-aniamtion.json"
             background="transparent"
-            speed="0.6"
-            style="width: 100%; height: 100%; max-width: 600px"
+            speed="0.8"
+            style="width: 100%; height: 100%"
             loop
             autoplay
           >
@@ -793,7 +780,17 @@
           <ul class="flex flex-col gap-3 font-space text-lg">
             <li>
               <a
-                href="#"
+                href="index.html"
+                class="hover:text-purple-600 transition-colors relative w-max group"
+                >Home
+                <span
+                  class="absolute -bottom-1 left-0 w-0 h-0.5 bg-purple-600 transition-all group-hover:w-full"
+                ></span
+              ></a>
+            </li>
+            <li>
+              <a
+                href="projetos.html"
                 class="hover:text-purple-600 transition-colors relative w-max group"
                 >Projetos
                 <span
@@ -803,17 +800,7 @@
             </li>
             <li>
               <a
-                href="#"
-                class="hover:text-purple-600 transition-colors relative w-max group"
-                >Serviços
-                <span
-                  class="absolute -bottom-1 left-0 w-0 h-0.5 bg-purple-600 transition-all group-hover:w-full"
-                ></span
-              ></a>
-            </li>
-            <li>
-              <a
-                href="#"
+                href="sobre.html"
                 class="hover:text-purple-600 transition-colors relative w-max group"
                 >Sobre
                 <span
@@ -823,7 +810,7 @@
             </li>
             <li>
               <a
-                href="#contato"
+                href="contatos.html"
                 class="hover:text-purple-600 transition-colors relative w-max group"
                 >Contato
                 <span
