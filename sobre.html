@@ -1,9 +1,14 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/IMG/favicon-32x32.png"
+    />
     <title>Sobre Nós - OKTO</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -104,22 +109,34 @@
         filter: blur(10px);
       }
       @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
       }
       @keyframes pulse-glow {
-        0% { transform: scale(1); opacity: 0.5; }
-        100% { transform: scale(1.2); opacity: 0.9; }
+        0% {
+          transform: scale(1);
+          opacity: 0.5;
+        }
+        100% {
+          transform: scale(1.2);
+          opacity: 0.9;
+        }
       }
 
       /* --- WHY SECTION CARDS --- */
       .why-card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
         overflow: hidden;
       }
       .why-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
       }
       .big-number {
         line-height: 0.8;
@@ -230,76 +247,76 @@
   </head>
 
   <body class="bg-[#050505]">
-    
-    <canvas id="canvas-cursor" class="fixed inset-0 pointer-events-none z-[60]"></canvas>
+    <canvas
+      id="canvas-cursor"
+      class="fixed inset-0 pointer-events-none z-[60]"
+    ></canvas>
 
- <header
+    <header
       class="fixed top-0 left-0 w-full h-24 bg-black/80 backdrop-blur-xl border-b border-white/10 z-50"
     >
       <div
-  class="w-full flex items-center px-6 md:px-8 h-full max-w-[1600px] mx-auto"
->
-  <!-- ESQUERDA: LOGO -->
-  <div class="flex-1">
-  <a href="./index.html" class="inline-block">
-    <h1
-      class="font-syne text-[32px] md:text-[48px] text-white hover:text-purple-500 transition"
-    >
-      OKTO<span class="text-purple-700">.</span>
-    </h1>
-  </a>
-</div>
+        class="w-full flex items-center px-6 md:px-8 h-full max-w-[1600px] mx-auto"
+      >
+        <!-- ESQUERDA: LOGO -->
+        <div class="flex-1">
+          <a href="./index.html" class="inline-block">
+            <h1
+              class="font-syne text-[32px] md:text-[48px] text-white hover:text-purple-500 transition"
+            >
+              OKTO<span class="text-purple-700">.</span>
+            </h1>
+          </a>
+        </div>
 
+        <!-- CENTRO: MENU -->
+        <nav class="hidden md:flex justify-center flex-1">
+          <ul class="flex gap-8">
+            <li>
+              <a
+                class="font-syne text-white text-[24px] relative hover:text-purple-500 transition after:block after:h-0.5 after:w-0 hover:after:w-full after:bg-purple-800 after:absolute after:transition-all"
+                href="./projetos.html"
+                >projetos</a
+              >
+            </li>
 
-  <!-- CENTRO: MENU -->
-  <nav class="hidden md:flex justify-center flex-1">
-    <ul class="flex gap-8">
-      <li>
-        <a
-          class="font-syne text-white text-[24px] relative hover:text-purple-500 transition after:block after:h-0.5 after:w-0 hover:after:w-full after:bg-purple-800 after:absolute after:transition-all"
-          href="./projetos.html"
-          >projetos</a
-        >
-      </li>
+            <li>
+              <a
+                class="font-syne text-white text-[24px] relative hover:text-purple-500 transition after:block after:h-0.5 after:w-0 hover:after:w-full after:bg-purple-800 after:absolute after:transition-all"
+                href="./sobre.html"
+                >sobre nós</a
+              >
+            </li>
 
-      <li>
-        <a
-          class="font-syne text-white text-[24px] relative hover:text-purple-500 transition after:block after:h-0.5 after:w-0 hover:after:w-full after:bg-purple-800 after:absolute after:transition-all"
-          href="./sobre.html"
-          >sobre nós</a
-        >
-      </li>
+            <li>
+              <a
+                class="font-syne text-white text-[24px] relative hover:text-purple-500 transition after:block after:h-0.5 after:w-0 hover:after:w-full after:bg-purple-800 after:absolute after:transition-all"
+                href="./contatos.html"
+                >contatos</a
+              >
+            </li>
+          </ul>
+        </nav>
 
-      <li>
-        <a
-          class="font-syne text-white text-[24px] relative hover:text-purple-500 transition after:block after:h-0.5 after:w-0 hover:after:w-full after:bg-purple-800 after:absolute after:transition-all"
-          href="./contatos.html"
-          >contatos</a
-        >
-      </li>
-    </ul>
-  </nav>
+        <!-- DIREITA: BOTÃO -->
+        <div class="flex-1 flex justify-end">
+          <a
+            href="./contatos.html"
+            class="hidden md:flex items-center justify-center bg-purple-700 font-bold font-syne text-white px-8 py-4 hover:bg-purple-600 transition"
+          >
+            CONTATO
+          </a>
 
-  <!-- DIREITA: BOTÃO -->
-  <div class="flex-1 flex justify-end">
-    <a
-      href="./contatos.html"
-      class="hidden md:flex items-center justify-center bg-purple-700 font-bold font-syne text-white px-8 py-4 hover:bg-purple-600 transition"
-    >
-      CONTATO
-    </a>
-
-    <!-- MOBILE -->
-    <button
-      id="menu-btn"
-      class="md:hidden flex flex-col justify-center items-center gap-1.5 w-10 h-10 border border-white/20 bg-white/5 rounded-full"
-    >
-      <span class="block w-5 h-0.5 bg-white"></span>
-      <span class="block w-5 h-0.5 bg-white"></span>
-    </button>
-  </div>
-</div>
-
+          <!-- MOBILE -->
+          <button
+            id="menu-btn"
+            class="md:hidden flex flex-col justify-center items-center gap-1.5 w-10 h-10 border border-white/20 bg-white/5 rounded-full"
+          >
+            <span class="block w-5 h-0.5 bg-white"></span>
+            <span class="block w-5 h-0.5 bg-white"></span>
+          </button>
+        </div>
+      </div>
     </header>
 
     <div
@@ -544,87 +561,152 @@
       </div>
     </section>
 
-    <section id="why-section" class="relative bg-white text-black py-20 md:py-32 z-30">
-        <div class="max-w-[1600px] mx-auto px-6 md:px-16">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-20">
-                
-                <div class="md:col-span-4 lg:col-span-5">
-                    <div class="md:sticky md:top-32">
-                        <h2 class="font-space font-bold text-5xl md:text-7xl lg:text-[6vw] leading-[0.9] uppercase mb-8">
-                            Por que<br /><span class="text-[#5B00E2]">OKTO?</span>
-                        </h2>
-                        <p class="font-space text-xl md:text-2xl text-gray-600 max-w-sm mb-10">
-                            4 motivos para você parar de procurar e começar a construir.
-                        </p>
-                        <a href="contatos.html" class="hidden md:inline-flex items-center gap-2 font-space font-bold text-lg border-b-2 border-black pb-1 hover:text-[#5B00E2] hover:border-[#5B00E2] transition-colors cursor-pointer">
-                            Iniciar Projeto <span class="text-2xl">→</span>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="md:col-span-8 lg:col-span-7 flex flex-col gap-8">
-                    
-                    <div class="why-card relative bg-[#f5f5f5] p-10 md:p-12 rounded-3xl w-full anim-card-up">
-                        <div class="absolute -right-4 -top-6 text-[120px] md:text-[180px] font-bold text-black/5 font-space select-none big-number">
-                            01
-                        </div>
-                        <div class="relative z-10">
-                            <h3 class="font-space font-bold text-3xl md:text-4xl uppercase mb-4">Design Autoral</h3>
-                            <p class="font-space text-lg text-gray-600 leading-relaxed max-w-md">
-                                Zero templates. Desenhamos cada pixel pensando na psicologia do seu cliente. Sua marca será única, impossível de ignorar.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="why-card relative bg-[#0a0a0a] text-white p-10 md:p-12 rounded-3xl w-full anim-card-up">
-                        <div class="absolute -right-4 -top-6 text-[120px] md:text-[180px] font-bold text-white/10 font-space select-none big-number">
-                            02
-                        </div>
-                        <div class="relative z-10">
-                            <h3 class="font-space font-bold text-3xl md:text-4xl uppercase mb-4 text-[#00C2FF]">Engenharia de Elite</h3>
-                            <p class="font-space text-lg text-gray-400 leading-relaxed max-w-md">
-                                Site lento perde venda. Usamos tecnologias de ponta (React/Next.js) para garantir carregamento instantâneo e segurança total.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="why-card relative bg-white border-2 border-[#5B00E2] p-10 md:p-12 rounded-3xl w-full anim-card-up">
-                        <div class="absolute -right-4 -top-6 text-[120px] md:text-[180px] font-bold text-[#5B00E2]/10 font-space select-none big-number">
-                            03
-                        </div>
-                        <div class="relative z-10">
-                            <h3 class="font-space font-bold text-3xl md:text-4xl uppercase mb-4 text-[#5B00E2]">Venda, Não Vitrine</h3>
-                            <p class="font-space text-lg text-gray-600 leading-relaxed max-w-md">
-                                Um site bonito que não vende é apenas arte. Nossos projetos são estruturados com funis de conversão para transformar visitantes em dinheiro.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="why-card relative bg-[#e5e5e5] p-10 md:p-12 rounded-3xl w-full anim-card-up">
-                        <div class="absolute -right-4 -top-6 text-[120px] md:text-[180px] font-bold text-black/5 font-space select-none big-number">
-                            04
-                        </div>
-                        <div class="relative z-10">
-                            <h3 class="font-space font-bold text-3xl md:text-4xl uppercase mb-4">Parceria Real</h3>
-                            <p class="font-space text-lg text-gray-600 leading-relaxed max-w-md">
-                                Sem robôs ou tickets infinitos. Você fala diretamente com quem resolve (Anna e Lucas). Somos o braço digital da sua empresa.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="why-card relative bg-[#5B00E2] text-white p-10 md:p-16 rounded-3xl w-full text-center mt-4 anim-card-up shadow-2xl">
-                        <h3 class="font-space font-bold text-3xl md:text-5xl uppercase mb-6">O Efeito OKTO</h3>
-                        <p class="font-space text-lg md:text-xl opacity-90 mb-8 max-w-xl mx-auto">
-                            Não entregamos apenas código. Entregamos autoridade e faturamento.
-                        </p>
-                        <a href="contatos.html" class="inline-block bg-white text-black font-space font-bold px-8 py-4 rounded-full text-lg hover:scale-105 transition-transform uppercase cursor-pointer">
-                            Agendar Reunião
-                        </a>
-                    </div>
-
-                </div>
+    <section
+      id="why-section"
+      class="relative bg-white text-black py-20 md:py-32 z-30"
+    >
+      <div class="max-w-[1600px] mx-auto px-6 md:px-16">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-20">
+          <div class="md:col-span-4 lg:col-span-5">
+            <div class="md:sticky md:top-32">
+              <h2
+                class="font-space font-bold text-5xl md:text-7xl lg:text-[6vw] leading-[0.9] uppercase mb-8"
+              >
+                Por que<br /><span class="text-[#5B00E2]">OKTO?</span>
+              </h2>
+              <p
+                class="font-space text-xl md:text-2xl text-gray-600 max-w-sm mb-10"
+              >
+                4 motivos para você parar de procurar e começar a construir.
+              </p>
+              <a
+                href="contatos.html"
+                class="hidden md:inline-flex items-center gap-2 font-space font-bold text-lg border-b-2 border-black pb-1 hover:text-[#5B00E2] hover:border-[#5B00E2] transition-colors cursor-pointer"
+              >
+                Iniciar Projeto <span class="text-2xl">→</span>
+              </a>
             </div>
+          </div>
+
+          <div class="md:col-span-8 lg:col-span-7 flex flex-col gap-8">
+            <div
+              class="why-card relative bg-[#f5f5f5] p-10 md:p-12 rounded-3xl w-full anim-card-up"
+            >
+              <div
+                class="absolute -right-4 -top-6 text-[120px] md:text-[180px] font-bold text-black/5 font-space select-none big-number"
+              >
+                01
+              </div>
+              <div class="relative z-10">
+                <h3
+                  class="font-space font-bold text-3xl md:text-4xl uppercase mb-4"
+                >
+                  Design Autoral
+                </h3>
+                <p
+                  class="font-space text-lg text-gray-600 leading-relaxed max-w-md"
+                >
+                  Zero templates. Desenhamos cada pixel pensando na psicologia
+                  do seu cliente. Sua marca será única, impossível de ignorar.
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="why-card relative bg-[#0a0a0a] text-white p-10 md:p-12 rounded-3xl w-full anim-card-up"
+            >
+              <div
+                class="absolute -right-4 -top-6 text-[120px] md:text-[180px] font-bold text-white/10 font-space select-none big-number"
+              >
+                02
+              </div>
+              <div class="relative z-10">
+                <h3
+                  class="font-space font-bold text-3xl md:text-4xl uppercase mb-4 text-[#00C2FF]"
+                >
+                  Engenharia de Elite
+                </h3>
+                <p
+                  class="font-space text-lg text-gray-400 leading-relaxed max-w-md"
+                >
+                  Site lento perde venda. Usamos tecnologias de ponta
+                  (React/Next.js) para garantir carregamento instantâneo e
+                  segurança total.
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="why-card relative bg-white border-2 border-[#5B00E2] p-10 md:p-12 rounded-3xl w-full anim-card-up"
+            >
+              <div
+                class="absolute -right-4 -top-6 text-[120px] md:text-[180px] font-bold text-[#5B00E2]/10 font-space select-none big-number"
+              >
+                03
+              </div>
+              <div class="relative z-10">
+                <h3
+                  class="font-space font-bold text-3xl md:text-4xl uppercase mb-4 text-[#5B00E2]"
+                >
+                  Venda, Não Vitrine
+                </h3>
+                <p
+                  class="font-space text-lg text-gray-600 leading-relaxed max-w-md"
+                >
+                  Um site bonito que não vende é apenas arte. Nossos projetos
+                  são estruturados com funis de conversão para transformar
+                  visitantes em dinheiro.
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="why-card relative bg-[#e5e5e5] p-10 md:p-12 rounded-3xl w-full anim-card-up"
+            >
+              <div
+                class="absolute -right-4 -top-6 text-[120px] md:text-[180px] font-bold text-black/5 font-space select-none big-number"
+              >
+                04
+              </div>
+              <div class="relative z-10">
+                <h3
+                  class="font-space font-bold text-3xl md:text-4xl uppercase mb-4"
+                >
+                  Parceria Real
+                </h3>
+                <p
+                  class="font-space text-lg text-gray-600 leading-relaxed max-w-md"
+                >
+                  Sem robôs ou tickets infinitos. Você fala diretamente com quem
+                  resolve (Anna e Lucas). Somos o braço digital da sua empresa.
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="why-card relative bg-[#5B00E2] text-white p-10 md:p-16 rounded-3xl w-full text-center mt-4 anim-card-up shadow-2xl"
+            >
+              <h3
+                class="font-space font-bold text-3xl md:text-5xl uppercase mb-6"
+              >
+                O Efeito OKTO
+              </h3>
+              <p
+                class="font-space text-lg md:text-xl opacity-90 mb-8 max-w-xl mx-auto"
+              >
+                Não entregamos apenas código. Entregamos autoridade e
+                faturamento.
+              </p>
+              <a
+                href="contatos.html"
+                class="inline-block bg-white text-black font-space font-bold px-8 py-4 rounded-full text-lg hover:scale-105 transition-transform uppercase cursor-pointer"
+              >
+                Agendar Reunião
+              </a>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <section class="relative py-32 bg-[#050505]">
@@ -775,110 +857,135 @@
       </div>
     </section>
 
-    <footer class="bg-white text-black pt-20 pb-5 relative overflow-hidden z-10">
-        <div
-          class="w-full flex justify-center items-center overflow-hidden border-b border-black/10"
+    <footer
+      class="bg-white text-black pt-20 pb-5 relative overflow-hidden z-10"
+    >
+      <div
+        class="w-full flex justify-center items-center overflow-hidden border-b border-black/10"
+      >
+        <h1
+          class="footer-big-text font-space font-extrabold text-[45vw] leading-none tracking-tighter select-none text-black translate-y-[20%]"
         >
-          <h1
-            class="footer-big-text font-space font-extrabold text-[45vw] leading-none tracking-tighter select-none text-black translate-y-[20%]"
+          OKTO
+        </h1>
+      </div>
+
+      <div
+        class="max-w-[1600px] mx-auto px-6 md:px-16 mt-16 grid grid-cols-1 md:grid-cols-12 gap-10"
+      >
+        <div class="md:col-span-4 flex flex-col justify-between">
+          <div>
+            <h3 class="font-syne font-bold text-3xl mb-4">
+              OKTO<span class="text-purple-600">.</span>
+            </h3>
+            <p class="font-space text-lg opacity-60 max-w-xs">
+              Transformando códigos em experiências digitais imersivas e
+              lucrativas.
+            </p>
+          </div>
+        </div>
+
+        <div class="md:col-span-2">
+          <h4 class="font-syne font-bold text-lg mb-6 uppercase tracking-wider">
+            Menu
+          </h4>
+          <ul class="flex flex-col gap-3 font-space text-lg">
+            <li>
+              <a
+                href="index.html"
+                class="hover:text-purple-600 transition-colors"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="projetos.html"
+                class="hover:text-purple-600 transition-colors"
+                >Projetos</a
+              >
+            </li>
+            <li>
+              <a
+                href="sobre.html"
+                class="hover:text-purple-600 transition-colors"
+                >Sobre</a
+              >
+            </li>
+            <li>
+              <a
+                href="contatos.html"
+                class="hover:text-purple-600 transition-colors"
+                >Contato</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-2">
+          <h4 class="font-syne font-bold text-lg mb-6 uppercase tracking-wider">
+            Social
+          </h4>
+          <ul class="flex flex-col gap-3 font-space text-lg">
+            <li>
+              <a
+                href="https://www.instagram.com/oktodesignagency/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="hover:text-purple-600 transition-colors flex items-center gap-2 group"
+              >
+                <span
+                  class="iconify group-hover:-translate-y-1 transition-transform"
+                  data-icon="mdi:instagram"
+                ></span>
+                Instagram
+              </a>
+            </li>
+
+            <li>
+              <a
+                href="https://wa.me/553498183877"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="hover:text-purple-600 transition-colors flex items-center gap-2 group"
+              >
+                <span
+                  class="iconify group-hover:-translate-y-1 transition-transform"
+                  data-icon="mdi:whatsapp"
+                ></span>
+                WhatsApp
+              </a>
+            </li>
+
+            <li>
+              <a
+                href="https://github.com/Luc4sF01"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="hover:text-purple-600 transition-colors flex items-center gap-2 group"
+              >
+                <span
+                  class="iconify group-hover:-translate-y-1 transition-transform"
+                  data-icon="mdi:github"
+                ></span>
+                GitHub
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-4 md:text-right flex flex-col justify-end">
+          <a
+            href="mailto:contato@okto.com"
+            class="font-syne font-bold text-2xl md:text-3xl hover:text-purple-600 transition-colors mb-6 break-words"
           >
-            OKTO
-          </h1>
-        </div>
-  
-        <div
-          class="max-w-[1600px] mx-auto px-6 md:px-16 mt-16 grid grid-cols-1 md:grid-cols-12 gap-10"
-        >
-          <div class="md:col-span-4 flex flex-col justify-between">
-            <div>
-              <h3 class="font-syne font-bold text-3xl mb-4">
-                OKTO<span class="text-purple-600">.</span>
-              </h3>
-              <p class="font-space text-lg opacity-60 max-w-xs">
-                Transformando códigos em experiências digitais imersivas e
-                lucrativas.
-              </p>
-            </div>
-          </div>
-  
-          <div class="md:col-span-2">
-            <h4 class="font-syne font-bold text-lg mb-6 uppercase tracking-wider">
-              Menu
-            </h4>
-            <ul class="flex flex-col gap-3 font-space text-lg">
-              <li><a href="index.html" class="hover:text-purple-600 transition-colors">Home</a></li>
-              <li><a href="projetos.html" class="hover:text-purple-600 transition-colors">Projetos</a></li>
-              <li><a href="sobre.html" class="hover:text-purple-600 transition-colors">Sobre</a></li>
-              <li><a href="contatos.html" class="hover:text-purple-600 transition-colors">Contato</a></li>
-            </ul>
-          </div>
-  
-          <div class="md:col-span-2">
-            <h4 class="font-syne font-bold text-lg mb-6 uppercase tracking-wider">
-              Social
-            </h4>
-            <ul class="flex flex-col gap-3 font-space text-lg">
-  <li>
-    <a
-      href="https://www.instagram.com/oktodesignagency/"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="hover:text-purple-600 transition-colors flex items-center gap-2 group"
-    >
-      <span
-        class="iconify group-hover:-translate-y-1 transition-transform"
-        data-icon="mdi:instagram"
-      ></span>
-      Instagram
-    </a>
-  </li>
-
-  <li>
-    <a
-      href="https://wa.me/553498183877"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="hover:text-purple-600 transition-colors flex items-center gap-2 group"
-    >
-      <span
-        class="iconify group-hover:-translate-y-1 transition-transform"
-        data-icon="mdi:whatsapp"
-      ></span>
-      WhatsApp
-    </a>
-  </li>
-
-  <li>
-    <a
-      href="https://github.com/Luc4sF01"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="hover:text-purple-600 transition-colors flex items-center gap-2 group"
-    >
-      <span
-        class="iconify group-hover:-translate-y-1 transition-transform"
-        data-icon="mdi:github"
-      ></span>
-      GitHub
-    </a>
-  </li>
-</ul>
-
-          </div>
-  
-          <div class="md:col-span-4 md:text-right flex flex-col justify-end">
-            <a
-              href="mailto:contato@okto.com"
-              class="font-syne font-bold text-2xl md:text-3xl hover:text-purple-600 transition-colors mb-6 break-words"
-            >
-              contato@okto.ag
-            </a>
-            <div class="font-space text-sm opacity-50 mt-auto">
-              <p>&copy; 2024 OKTO Agency.</p>
-              <p>Todos os direitos reservados.</p>
-            </div>
+            contato@okto.ag
+          </a>
+          <div class="font-space text-sm opacity-50 mt-auto">
+            <p>&copy; 2024 OKTO Agency.</p>
+            <p>Todos os direitos reservados.</p>
           </div>
         </div>
+      </div>
     </footer>
 
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
@@ -966,18 +1073,18 @@
 
       // 5. Cards Scroll (Vertical)
       const cards = gsap.utils.toArray('.anim-card-up');
-      cards.forEach(card => {
-          gsap.from(card, {
-              scrollTrigger: {
-                  trigger: card,
-                  start: "top 85%",
-                  toggleActions: "play none none reverse"
-              },
-              y: 50,
-              opacity: 0,
-              duration: 0.8,
-              ease: "power3.out"
-          });
+      cards.forEach((card) => {
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse',
+          },
+          y: 50,
+          opacity: 0,
+          duration: 0.8,
+          ease: 'power3.out',
+        });
       });
 
       // 6. Timeline Logic
@@ -1032,88 +1139,88 @@
 
       // 9. CURSOR CANVAS (Desktop)
       if (window.matchMedia('(pointer: fine)').matches) {
-          const canvas = document.querySelector('#canvas-cursor');
-          const ctx = canvas.getContext('2d');
-          let mouseMoved = false;
-          const pointer = {
-            x: 0.5 * window.innerWidth,
-            y: 0.5 * window.innerHeight,
-          };
-          const params = {
-            pointsNumber: 40,
-            widthFactor: 0.3,
-            mouseThreshold: 0.6,
-            spring: 0.4,
-            friction: 0.5,
-          };
-          const trail = new Array(params.pointsNumber);
-          for (let i = 0; i < params.pointsNumber; i++) {
-            trail[i] = { x: pointer.x, y: pointer.y, dx: 0, dy: 0 };
-          }
-
-          window.addEventListener('click', (e) =>
-            updateMousePosition(e.clientX, e.clientY),
-          );
-          window.addEventListener('mousemove', (e) => {
-            mouseMoved = true;
-            updateMousePosition(e.clientX, e.clientY);
-          });
-          window.addEventListener('touchmove', (e) => {
-            mouseMoved = true;
-            updateMousePosition(
-              e.targetTouches[0].clientX,
-              e.targetTouches[0].clientY,
-            );
-          });
-
-          function updateMousePosition(eX, eY) {
-            pointer.x = eX;
-            pointer.y = eY;
-          }
-          function setupCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-          }
-
-          function update(t) {
-            if (!mouseMoved) {
-              pointer.x =
-                (0.5 + 0.3 * Math.cos(0.002 * t) * Math.sin(0.005 * t)) *
-                window.innerWidth;
-              pointer.y =
-                (0.5 + 0.2 * Math.cos(0.005 * t) + 0.1 * Math.cos(0.01 * t)) *
-                window.innerHeight;
-            }
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.strokeStyle = 'white';
-            trail.forEach((p, pIdx) => {
-              const prev = pIdx === 0 ? pointer : trail[pIdx - 1];
-              const spring = pIdx === 0 ? 0.4 * params.spring : params.spring;
-              p.dx += (prev.x - p.x) * spring;
-              p.dy += (prev.y - p.y) * spring;
-              p.dx *= params.friction;
-              p.dy *= params.friction;
-              p.x += p.dx;
-              p.y += p.dy;
-            });
-            ctx.lineCap = 'round';
-            ctx.beginPath();
-            ctx.moveTo(trail[0].x, trail[0].y);
-            for (let i = 1; i < trail.length - 1; i++) {
-              const xc = 0.5 * (trail[i].x + trail[i + 1].x);
-              const yc = 0.5 * (trail[i].y + trail[i + 1].y);
-              ctx.quadraticCurveTo(trail[i].x, trail[i].y, xc, yc);
-              ctx.lineWidth = params.widthFactor * (params.pointsNumber - i);
-              ctx.stroke();
-            }
-            ctx.lineTo(trail[trail.length - 1].x, trail[trail.length - 1].y);
-            ctx.stroke();
-            window.requestAnimationFrame(update);
-          }
-          setupCanvas();
-          update(0);
-          window.addEventListener('resize', setupCanvas);
+        const canvas = document.querySelector('#canvas-cursor');
+        const ctx = canvas.getContext('2d');
+        let mouseMoved = false;
+        const pointer = {
+          x: 0.5 * window.innerWidth,
+          y: 0.5 * window.innerHeight,
+        };
+        const params = {
+          pointsNumber: 40,
+          widthFactor: 0.3,
+          mouseThreshold: 0.6,
+          spring: 0.4,
+          friction: 0.5,
+        };
+        const trail = new Array(params.pointsNumber);
+        for (let i = 0; i < params.pointsNumber; i++) {
+          trail[i] = { x: pointer.x, y: pointer.y, dx: 0, dy: 0 };
         }
+
+        window.addEventListener('click', (e) =>
+          updateMousePosition(e.clientX, e.clientY),
+        );
+        window.addEventListener('mousemove', (e) => {
+          mouseMoved = true;
+          updateMousePosition(e.clientX, e.clientY);
+        });
+        window.addEventListener('touchmove', (e) => {
+          mouseMoved = true;
+          updateMousePosition(
+            e.targetTouches[0].clientX,
+            e.targetTouches[0].clientY,
+          );
+        });
+
+        function updateMousePosition(eX, eY) {
+          pointer.x = eX;
+          pointer.y = eY;
+        }
+        function setupCanvas() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
+
+        function update(t) {
+          if (!mouseMoved) {
+            pointer.x =
+              (0.5 + 0.3 * Math.cos(0.002 * t) * Math.sin(0.005 * t)) *
+              window.innerWidth;
+            pointer.y =
+              (0.5 + 0.2 * Math.cos(0.005 * t) + 0.1 * Math.cos(0.01 * t)) *
+              window.innerHeight;
+          }
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.strokeStyle = 'white';
+          trail.forEach((p, pIdx) => {
+            const prev = pIdx === 0 ? pointer : trail[pIdx - 1];
+            const spring = pIdx === 0 ? 0.4 * params.spring : params.spring;
+            p.dx += (prev.x - p.x) * spring;
+            p.dy += (prev.y - p.y) * spring;
+            p.dx *= params.friction;
+            p.dy *= params.friction;
+            p.x += p.dx;
+            p.y += p.dy;
+          });
+          ctx.lineCap = 'round';
+          ctx.beginPath();
+          ctx.moveTo(trail[0].x, trail[0].y);
+          for (let i = 1; i < trail.length - 1; i++) {
+            const xc = 0.5 * (trail[i].x + trail[i + 1].x);
+            const yc = 0.5 * (trail[i].y + trail[i + 1].y);
+            ctx.quadraticCurveTo(trail[i].x, trail[i].y, xc, yc);
+            ctx.lineWidth = params.widthFactor * (params.pointsNumber - i);
+            ctx.stroke();
+          }
+          ctx.lineTo(trail[trail.length - 1].x, trail[trail.length - 1].y);
+          ctx.stroke();
+          window.requestAnimationFrame(update);
+        }
+        setupCanvas();
+        update(0);
+        window.addEventListener('resize', setupCanvas);
+      }
     </script>
   </body>
 </html>
