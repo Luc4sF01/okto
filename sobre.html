@@ -233,84 +233,73 @@
     
     <canvas id="canvas-cursor" class="fixed inset-0 pointer-events-none z-[60]"></canvas>
 
-    <header
-      class="fixed top-0 left-0 w-full h-24 bg-black/80 backdrop-blur-xl border-b border-white/10 z-50 transition-all"
+ <header
+      class="fixed top-0 left-0 w-full h-24 bg-black/80 backdrop-blur-xl border-b border-white/10 z-50"
     >
       <div
-        class="w-full flex items-center justify-between px-6 md:px-8 h-full max-w-[1600px] mx-auto"
-      >
-        <h1
-          class="font-syne text-[32px] md:text-[48px] text-white z-50 relative"
+  class="w-full flex items-center px-6 md:px-8 h-full max-w-[1600px] mx-auto"
+>
+  <!-- ESQUERDA: LOGO -->
+  <div class="flex-1">
+  <a href="./index.html" class="inline-block">
+    <h1
+      class="font-syne text-[32px] md:text-[48px] text-white hover:text-purple-500 transition"
+    >
+      OKTO<span class="text-purple-700">.</span>
+    </h1>
+  </a>
+</div>
+
+
+  <!-- CENTRO: MENU -->
+  <nav class="hidden md:flex justify-center flex-1">
+    <ul class="flex gap-8">
+      <li>
+        <a
+          class="font-syne text-white text-[24px] relative hover:text-purple-500 transition after:block after:h-0.5 after:w-0 hover:after:w-full after:bg-purple-800 after:absolute after:transition-all"
+          href="./projetos.html"
+          >projetos</a
         >
-          <a href="index.html">OKTO<span class="text-purple-700">.</span></a>
-        </h1>
+      </li>
 
-        <nav class="hidden md:block">
-          <ul class="flex gap-8">
-            <li>
-              <a
-                class="font-syne text-white text-[24px] relative hover:text-purple-500 transition-colors after:content-[''] after:block after:h-0.5 after:w-0 after:bg-purple-800 after:transition-all after:duration-500 after:absolute hover:after:w-full"
-                href="index.html"
-                >home</a
-              >
-            </li>
-            <li>
-              <a
-                class="font-syne text-white text-[24px] relative hover:text-purple-500 transition-colors after:content-[''] after:block after:h-0.5 after:w-0 after:bg-purple-800 after:transition-all after:duration-500 after:absolute hover:after:w-full"
-                href="projetos.html"
-                >projetos</a
-              >
-            </li>
-            <li>
-              <a
-                class="font-syne relative text-white text-[24px] hover:text-purple-500 transition-colors after:content-[''] after:block after:h-0.5 after:w-0 after:bg-purple-800 after:transition-all after:duration-500 after:absolute hover:after:w-full"
-                href="sobre.html"
-                >sobre nós</a
-              >
-            </li>
-            <li>
-              <a
-                class="font-syne relative text-white text-[24px] hover:text-purple-500 transition-colors after:content-[''] after:block after:h-0.5 after:w-0 after:bg-purple-800 after:transition-all after:duration-500 after:absolute hover:after:w-full"
-                href="contatos.html"
-                >contatos</a
-              >
-            </li>
-          </ul>
-        </nav>
+      <li>
+        <a
+          class="font-syne text-white text-[24px] relative hover:text-purple-500 transition after:block after:h-0.5 after:w-0 hover:after:w-full after:bg-purple-800 after:absolute after:transition-all"
+          href="./sobre.html"
+          >sobre nós</a
+        >
+      </li>
 
-        <div class="flex items-center gap-1 z-50">
-          <div class="hidden md:flex gap-2">
-            <a
-              class="font-syne font-bold text-black bg-white text-xl px-4 py-2 hover:bg-gray-400 transition hover:translate-y-1 hover:scale-110"
-              href="#"
-              >PT</a
-            >
-            <a
-              class="font-syne font-bold text-white text-xl bg-[#353535] px-4 py-2 hover:bg-black transition hover:translate-y-1 hover:scale-110"
-              href="#"
-              >EN</a
-            >
-          </div>
+      <li>
+        <a
+          class="font-syne text-white text-[24px] relative hover:text-purple-500 transition after:block after:h-0.5 after:w-0 hover:after:w-full after:bg-purple-800 after:absolute after:transition-all"
+          href="./contatos.html"
+          >contatos</a
+        >
+      </li>
+    </ul>
+  </nav>
 
-          <a
-            class="font-syne font-bold bg-[#5B00E2] text-sm md:text-xl text-white px-4 md:px-6 py-2 ml-2 hover:bg-purple-800 transition hover:translate-y-1 hover:scale-110 hidden sm:block"
-            href="contatos.html"
-            >CONTATO</a
-          >
+  <!-- DIREITA: BOTÃO -->
+  <div class="flex-1 flex justify-end">
+    <a
+      href="./contatos.html"
+      class="hidden md:flex items-center justify-center bg-purple-700 font-bold font-syne text-white px-8 py-4 hover:bg-purple-600 transition"
+    >
+      CONTATO
+    </a>
 
-          <button
-            id="menu-btn"
-            class="md:hidden ml-4 flex flex-col justify-center items-center gap-1.5 w-10 h-10 border border-white/20 bg-white/5 rounded-full z-50"
-          >
-            <span
-              class="block w-5 h-0.5 bg-white transition-all duration-300 origin-center"
-            ></span>
-            <span
-              class="block w-5 h-0.5 bg-white transition-all duration-300 origin-center"
-            ></span>
-          </button>
-        </div>
-      </div>
+    <!-- MOBILE -->
+    <button
+      id="menu-btn"
+      class="md:hidden flex flex-col justify-center items-center gap-1.5 w-10 h-10 border border-white/20 bg-white/5 rounded-full"
+    >
+      <span class="block w-5 h-0.5 bg-white"></span>
+      <span class="block w-5 h-0.5 bg-white"></span>
+    </button>
+  </div>
+</div>
+
     </header>
 
     <div
