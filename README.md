@@ -16,7 +16,7 @@ O foco do projeto é:
 - identidade visual consistente  
 - navegação intuitiva  
 - hierarquia clara de informação  
-- acesso rápido ao contato  
+- acesso rápido ao contato  .
 
 O resultado é um site que comunica **seriedade, modernidade e presença digital sólida**, sem distrações.
 
