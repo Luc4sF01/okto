@@ -1,14 +1,9 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="/IMG/favicon-32x32.png"
-    />
+
     <script src="https://cdn.tailwindcss.com"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -19,379 +14,294 @@
     />
 
     <style>
-      /* --- GLOBAIS --- */
       :root {
         --color-purple: #5b00e2;
         --color-dark: #050505;
         --color-light: #ffffff;
       }
 
-      .font-syne {
-        font-family: 'Syne', sans-serif;
-      }
-      .font-space {
-        font-family: 'Space Grotesk', sans-serif;
-      }
+      .font-syne { font-family: 'Syne', sans-serif; }
+      .font-space { font-family: 'Space Grotesk', sans-serif; }
 
       body {
         background-color: var(--color-dark);
         color: var(--color-light);
         margin: 0;
-        overflow-x: hidden; /* Evita scroll lateral indesejado */
+        overflow-x: hidden;
       }
 
-      /* Scrollbar Customizada */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #000;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #333;
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: var(--color-purple);
+      ::-webkit-scrollbar { width: 8px; }
+      ::-webkit-scrollbar-track { background: #000; }
+      ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+      ::-webkit-scrollbar-thumb:hover { background: var(--color-purple); }
+
+      /* ─── PAGE HERO ─── */
+      .projects-hero {
+        padding-top: 7rem;
+        padding-bottom: 0;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
       }
 
-      /* Transição Suave do Menu Mobile */
-      #mobile-menu-overlay {
-        transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
-      }
-
-      /* --- EXPANDING CARDS LOGIC --- */
-      :root {
-        --anim-speed: 0.6s;
-        --expand-speed: 0.7s;
-      }
-
-      .cont {
-        position: relative;
-        overflow: hidden;
-        height: 100vh;
-        padding-top: 6rem; /* Espaço para o Header */
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .cont__inner {
-        position: relative;
-        flex: 1;
-        width: 100%;
-        max-width: 1600px;
-        margin: 0 auto;
-        overflow: hidden;
-      }
-
-      /* CARD INDIVIDUAL */
-      .el {
-        position: absolute;
-        left: 0;
-        top: 0;
-        background: #1a1a1a;
-        overflow: hidden;
-        transition:
-          transform var(--anim-speed) var(--expand-speed),
-          width var(--expand-speed),
-          height var(--expand-speed),
-          z-index 0s calc(var(--anim-speed) + var(--expand-speed));
-        will-change: transform, width, height;
-      }
-
-      /* --- DESKTOP (Horizontal) --- */
-      @media (min-width: 768px) {
-        .el {
-          width: 20%;
-          height: 100%;
-          border-right: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .el:nth-child(1) {
-          transform: translate3d(0%, 0, 0);
-        }
-        .el:nth-child(2) {
-          transform: translate3d(100%, 0, 0);
-        }
-        .el:nth-child(3) {
-          transform: translate3d(200%, 0, 0);
-        }
-        .el:nth-child(4) {
-          transform: translate3d(300%, 0, 0);
-        }
-        .el:nth-child(5) {
-          transform: translate3d(400%, 0, 0);
-        }
-        .el:last-child {
-          border-right: none;
-        }
-
-        .el.s--active {
-          width: 100%;
-          transform: translate3d(0, 0, 0) !important;
-          z-index: 10;
-          transition:
-            transform var(--anim-speed),
-            width var(--expand-speed) 0.1s;
-        }
-
-        .cont.s--el-active .el:not(.s--active) {
-          transform: scale(0.9);
-          opacity: 0;
-          pointer-events: none;
-          transition:
-            opacity 0.4s,
-            transform 0.4s;
-        }
-
-        .el__heading {
-          transform: rotate(-90deg);
-          white-space: nowrap;
-        }
-      }
-
-      /* --- MOBILE (Vertical Stack) --- */
-      @media (max-width: 767px) {
-        .cont {
-          height: auto;
-          min-height: 100vh;
-        }
-        .cont__inner {
-          height: calc(100vh - 6rem);
-        }
-
-        .el {
-          width: 100%;
-          height: 20%;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .el:nth-child(1) {
-          transform: translate3d(0, 0%, 0);
-        }
-        .el:nth-child(2) {
-          transform: translate3d(0, 100%, 0);
-        }
-        .el:nth-child(3) {
-          transform: translate3d(0, 200%, 0);
-        }
-        .el:nth-child(4) {
-          transform: translate3d(0, 300%, 0);
-        }
-        .el:nth-child(5) {
-          transform: translate3d(0, 400%, 0);
-        }
-
-        .el.s--active {
-          height: 100%;
-          transform: translate3d(0, 0, 0) !important;
-          z-index: 20;
-          top: 0;
-        }
-
-        .el__heading {
-          transform: rotate(0deg);
-          font-size: 18px;
-          margin-left: 20px;
-        }
-
-        .el__preview-cont {
-          justify-content: flex-start !important;
-          padding-left: 20px;
-        }
-
-        .el__text {
-          font-size: 32px !important;
-        }
-        .el__index {
-          display: none;
-        }
-        .el__close-btn {
-          top: 20px;
-          right: 20px;
-        }
-      }
-
-      .el:not(.s--active) {
-        cursor: pointer;
-      }
-
-      .el__overflow {
-        overflow: hidden;
-        position: relative;
-        height: 100%;
-      }
-
-      .el__inner {
-        overflow: hidden;
-        position: relative;
-        height: 100%;
-        transition: transform 1s;
-      }
-
-      .el__bg {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-      }
-
-      .el__bg:before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-size: cover;
-        background-position: center;
-        transition:
-          transform 1s,
-          filter 0.5s;
-        background-image: var(--bg-img);
-        filter: grayscale(100%) brightness(0.6);
-      }
-
-      .el:hover .el__bg:before,
-      .el.s--active .el__bg:before {
-        filter: grayscale(0%) brightness(1);
-        transform: scale(1.1);
-      }
-
-      .el__bg:after {
-        content: '';
-        z-index: 1;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        opacity: 0;
-        transition: opacity 0.5s;
-      }
-
-      .cont.s--el-active .el__bg:after {
-        transition: opacity 0.5s 1.4s;
-        opacity: 1 !important;
-      }
-
-      .el__preview-cont {
-        z-index: 2;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        transition: opacity 0.3s;
-      }
-
-      .el.s--active .el__preview-cont {
-        opacity: 0;
-        pointer-events: none;
-      }
-
-      .el__heading {
-        color: #fff;
-        text-transform: uppercase;
+      .projects-hero__title {
         font-family: 'Syne', sans-serif;
-        font-weight: 700;
-        font-size: 24px;
-        letter-spacing: 2px;
-        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
-      }
-
-      .el__content {
-        z-index: 3;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        padding: 20px;
-        opacity: 0;
-        pointer-events: none;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        background: rgba(0, 0, 0, 0.6);
-        transition: opacity 0.5s 0.5s;
-      }
-
-      .el.s--active .el__content {
-        opacity: 1;
-        pointer-events: auto;
-      }
-
-      .el__text {
-        font-family: 'Syne', sans-serif;
-        font-size: 40px;
         font-weight: 800;
-        margin-bottom: 10px;
+        font-size: clamp(60px, 13vw, 180px);
+        line-height: 0.88;
         text-transform: uppercase;
-      }
-      @media (min-width: 768px) {
-        .el__text {
-          font-size: 60px;
-        }
+        letter-spacing: -0.02em;
+        color: #fff;
       }
 
-      .el__close-btn {
-        position: absolute;
-        right: 20px;
-        top: 120px;
-        width: 40px;
-        height: 40px;
+      /* ─── ACCORDION ROWS ─── */
+      .project-row {
+        border-bottom: 1px solid rgba(255,255,255,0.08);
         cursor: pointer;
-        z-index: 10;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s;
-        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .project-row-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+        padding: 2rem 0;
+        user-select: none;
+      }
+
+      .project-num {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        color: rgba(255,255,255,0.25);
+        flex-shrink: 0;
+        width: 2rem;
+      }
+
+      .project-title {
+        font-family: 'Syne', sans-serif;
+        font-weight: 800;
+        font-size: clamp(26px, 3.5vw, 56px);
+        text-transform: uppercase;
+        color: #fff;
+        transition: color 0.3s ease;
+        line-height: 1;
+      }
+
+      .project-row:hover .project-title,
+      .project-row.is-open .project-title {
+        color: var(--color-purple);
+      }
+
+      .project-tag {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 13px;
+        color: rgba(255,255,255,0.35);
+        white-space: nowrap;
+      }
+
+      .project-toggle {
+        width: 44px;
+        height: 44px;
+        border: 1px solid rgba(255,255,255,0.2);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(0, 0, 0, 0.5);
-      }
-      .el.s--active .el__close-btn {
-        opacity: 1;
-        pointer-events: auto;
-      }
-      .el__close-btn:before {
-        content: '✕';
-        color: white;
+        font-size: 22px;
+        color: #fff;
+        background: transparent;
+        cursor: pointer;
+        flex-shrink: 0;
+        transition: background 0.3s, border-color 0.3s, transform 0.4s;
+        line-height: 1;
         font-family: sans-serif;
-        font-size: 14px;
       }
 
-      .el__index {
-        position: absolute;
-        bottom: -50px;
-        left: 0;
-        width: 100%;
-        text-align: center;
+      .project-row.is-open .project-toggle {
+        background: var(--color-purple);
+        border-color: var(--color-purple);
+        transform: rotate(45deg);
+      }
+
+      /* ─── ACCORDION BODY (grid trick) ─── */
+      .project-row-body {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .project-row.is-open .project-row-body {
+        grid-template-rows: 1fr;
+      }
+
+      .project-body-inner {
+        overflow: hidden;
+      }
+
+      .project-body-content {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        padding-bottom: 3rem;
+      }
+
+      @media (min-width: 768px) {
+        .project-body-content {
+          flex-direction: row;
+          gap: 3rem;
+        }
+      }
+
+      /* ─── INFO COLUMN ─── */
+      .project-desc-col {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 2rem;
+        flex-shrink: 0;
+      }
+
+      @media (min-width: 768px) {
+        .project-desc-col { width: 280px; }
+      }
+
+      .project-desc-col p {
         font-family: 'Space Grotesk', sans-serif;
-        font-size: 15vw;
-        font-weight: 700;
-        opacity: 0.1;
-        pointer-events: none;
-        transition: opacity 0.3s;
-      }
-      .el:hover .el__index {
-        opacity: 0.3;
-      }
-      .el.s--active .el__index {
-        opacity: 0;
+        font-size: 16px;
+        color: rgba(255,255,255,0.55);
+        line-height: 1.7;
+        margin: 0;
       }
 
-      /* --- MARQUEE INFINITO (Animação CSS Pura) --- */
+      .project-visit-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: 'Syne', sans-serif;
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: 1.5px;
+        color: #fff;
+        background: var(--color-purple);
+        padding: 14px 28px;
+        text-decoration: none;
+        transition: background 0.3s, transform 0.2s;
+        align-self: flex-start;
+      }
+
+      .project-visit-btn:hover {
+        background: #fff;
+        color: #000;
+        transform: translateY(-2px);
+      }
+
+      /* ─── PREVIEW COLUMN ─── */
+      .project-preview-col {
+        flex: 1;
+        position: relative;
+        min-width: 0;
+      }
+
+      /* ─── LIVE BADGE ─── */
+      .live-badge {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(0,0,0,0.75);
+        border: 1px solid rgba(255,255,255,0.15);
+        backdrop-filter: blur(8px);
+        padding: 4px 10px;
+        font-family: 'Syne', sans-serif;
+        font-weight: 700;
+        font-size: 10px;
+        letter-spacing: 2px;
+        color: #fff;
+        border-radius: 2px;
+      }
+
+      .live-dot {
+        width: 7px;
+        height: 7px;
+        background: #ff3b3b;
+        border-radius: 50%;
+        animation: pulse 1.4s ease-in-out infinite;
+        flex-shrink: 0;
+      }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.4; transform: scale(0.7); }
+      }
+
+      /* ─── IFRAME WRAPPER ─── */
+      .iframe-wrap {
+        width: 100%;
+        overflow: hidden;
+        background: #111;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 4px;
+        position: relative;
+      }
+
+      .iframe-wrap iframe {
+        display: block;
+        width: 1440px;
+        height: 900px;
+        border: none;
+        transform-origin: top left;
+        pointer-events: none;
+      }
+
+      /* ─── MOBILE THUMB ─── */
+      .mobile-thumb {
+        display: none;
+        width: 100%;
+        border-radius: 4px;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.08);
+      }
+
+      .mobile-thumb img {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        display: block;
+      }
+
+      .mobile-thumb-gradient {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background: linear-gradient(135deg, #5B00E2 0%, #1a0050 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .mobile-thumb-gradient span {
+        font-family: 'Syne', sans-serif;
+        font-weight: 800;
+        font-size: 2rem;
+        color: rgba(255,255,255,0.2);
+        letter-spacing: 4px;
+        text-transform: uppercase;
+      }
+
+      /* Mobile: show thumb, hide iframe */
+      @media (max-width: 767px) {
+        .project-preview-col { display: block; }
+        .iframe-wrap { display: none; }
+        .live-badge { display: none; }
+        .mobile-thumb { display: block; }
+      }
+
+      @media (min-width: 768px) {
+        .mobile-thumb { display: none; }
+      }
+
+      /* ─── MARQUEE ─── */
       .marquee-wrapper {
         display: flex;
         overflow: hidden;
@@ -408,274 +318,299 @@
         animation: scroll 20s linear infinite;
       }
       @keyframes scroll {
-        from {
-          transform: translateX(0);
-        }
-        to {
-          transform: translateX(-100%);
-        }
+        from { transform: translateX(0); }
+        to { transform: translateX(-100%); }
       }
 
-      /* --- UTILS PARA SPLIT TYPE --- */
-      .char {
-        display: inline-block;
-        /* Correção para evitar cortes na animação */
-        padding-bottom: 0.1em;
+      /* ─── MOBILE CSS IMPROVEMENTS ─── */
+      @media (max-width: 767px) {
+        .projects-hero__title { font-size: clamp(48px, 14vw, 80px); }
+        .project-title { font-size: clamp(22px, 6vw, 32px); }
+        .project-row-header { padding: 1.25rem 0; }
+        .project-desc-col { width: 100%; }
+        .project-body-content { padding-bottom: 2rem; }
       }
+
+      /* ─── UTILS ─── */
+      .char { display: inline-block; padding-bottom: 0.1em; }
     </style>
 
-    <title>OKTO - Digital Experience</title>
+    <title>OKTO - Projetos</title>
   </head>
 
   <body class="bg-[#050505]">
-    <header
-      class="fixed top-0 left-0 w-full h-24 bg-black/80 backdrop-blur-xl border-b border-white/10 z-50"
-    >
-      <div
-        class="w-full flex items-center px-6 md:px-8 h-full max-w-[1600px] mx-auto"
-      >
-        <!-- ESQUERDA: LOGO -->
-        <div class="flex-1">
-          <a href="./index.html" class="inline-block">
-            <h1
-              class="font-syne text-[32px] md:text-[48px] text-white hover:text-purple-500 transition"
-            >
-              OKTO<span class="text-purple-700">.</span>
-            </h1>
-          </a>
-        </div>
 
-        <!-- CENTRO: MENU -->
-        <nav class="hidden md:flex justify-center flex-1">
-          <ul class="flex gap-8">
-            <li>
-              <a
-                class="font-syne text-white text-[24px] relative hover:text-purple-500 transition after:block after:h-0.5 after:w-0 hover:after:w-full after:bg-purple-800 after:absolute after:transition-all"
-                href="./projetos.html"
-                >projetos</a
-              >
-            </li>
-
-            <li>
-              <a
-                class="font-syne text-white text-[24px] relative hover:text-purple-500 transition after:block after:h-0.5 after:w-0 hover:after:w-full after:bg-purple-800 after:absolute after:transition-all"
-                href="./sobre.html"
-                >sobre nós</a
-              >
-            </li>
-
-            <li>
-              <a
-                class="font-syne text-white text-[24px] relative hover:text-purple-500 transition after:block after:h-0.5 after:w-0 hover:after:w-full after:bg-purple-800 after:absolute after:transition-all"
-                href="./contatos.html"
-                >contatos</a
-              >
-            </li>
-          </ul>
+    <!-- ─── HEADER ─── -->
+    <header class="fixed top-0 left-0 w-full h-20 bg-black/85 backdrop-blur-md border-b border-white/5 z-50">
+      <div class="max-w-400 mx-auto px-5 md:px-12 h-full flex items-center justify-between">
+        <a href="/src/index.html" class="font-syne font-extrabold text-[28px] md:text-[36px] text-white z-50 relative">
+          OKTO<span class="text-[#5B00E2]">.</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-10">
+          <a href="/src/index.html" class="font-syne text-white/70 text-base hover:text-white transition-colors">home</a>
+          <a href="/src/projetos.html" class="font-syne text-[#5B00E2] text-base font-bold">projetos</a>
+          <a href="/src/sobre.html" class="font-syne text-white/70 text-base hover:text-white transition-colors">sobre nós</a>
+          <a href="/src/contatos.html" class="font-syne text-white/70 text-base hover:text-white transition-colors">contatos</a>
         </nav>
-
-        <!-- DIREITA: BOTÃO -->
-        <div class="flex-1 flex justify-end">
-          <a
-            href="./contatos.html"
-            class="hidden md:flex items-center justify-center bg-purple-700 font-bold font-syne text-white px-8 py-4 hover:bg-purple-600 transition"
-          >
-            CONTATO
+        <div class="flex items-center gap-3">
+          <a href="/src/contatos.html" class="hidden md:inline-block font-syne font-bold bg-[#5B00E2] text-white text-sm px-5 py-2.5 hover:bg-[#4a00b8] transition-colors">
+            INICIAR PROJETO
           </a>
-
-          <!-- MOBILE -->
-          <button
-            id="menu-btn"
-            class="md:hidden flex flex-col justify-center items-center gap-1.5 w-10 h-10 border border-white/20 bg-white/5 rounded-full"
-          >
-            <span class="block w-5 h-0.5 bg-white"></span>
-            <span class="block w-5 h-0.5 bg-white"></span>
+          <button id="menu-btn" class="md:hidden flex flex-col justify-center items-center gap-1.25 w-10 h-10 z-50 relative">
+            <span class="menu-bar block w-6 h-0.5 bg-white transition-all duration-300 origin-center"></span>
+            <span class="menu-bar block w-6 h-0.5 bg-white transition-all duration-300 origin-center"></span>
+            <span class="menu-bar block w-4 h-0.5 bg-white/50 transition-all duration-300 self-start"></span>
           </button>
         </div>
       </div>
     </header>
 
-    <div
-      id="mobile-menu-overlay"
-      class="fixed inset-0 bg-black z-40 transform translate-x-full flex flex-col justify-center items-center h-screen w-screen md:hidden"
-    >
-      <ul class="flex flex-col gap-8 text-center">
-        <li>
-          <a
-            class="mobile-link font-syne text-white text-4xl hover:text-purple-500"
-            href="index.html"
-            >home</a
-          >
-        </li>
-        <li>
-          <a
-            class="mobile-link font-syne text-white text-4xl hover:text-purple-500"
-            href="projetos.html"
-            >projetos</a
-          >
-        </li>
-
-        <li>
-          <a
-            class="mobile-link font-syne text-white text-4xl hover:text-purple-500"
-            href="sobre.html"
-            >sobre nós</a
-          >
-        </li>
-        <li>
-          <a
-            class="mobile-link font-syne text-white text-4xl hover:text-purple-500"
-            href="contatos.html"
-            >contatos</a
-          >
-        </li>
-      </ul>
-      <div class="flex gap-4 mt-12">
-        <a
-          class="font-syne font-bold text-black bg-white text-xl px-6 py-3"
-          href="#"
-          >PT</a
-        >
-        <a
-          class="font-syne font-bold text-white text-xl bg-[#353535] px-6 py-3 border border-white/20"
-          href="#"
-          >EN</a
-        >
+    <!-- Mobile menu overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-black z-40 translate-x-full transition-transform duration-500 ease-in-out md:hidden flex flex-col justify-between py-24 px-8">
+      <nav class="flex flex-col gap-2 mt-8">
+        <a href="/src/index.html" class="font-syne font-bold text-5xl text-white/40 hover:text-white transition-colors py-3 border-b border-white/5">home</a>
+        <a href="/src/projetos.html" class="font-syne font-bold text-5xl text-[#5B00E2] py-3 border-b border-white/5">projetos</a>
+        <a href="/src/sobre.html" class="font-syne font-bold text-5xl text-white/40 hover:text-white transition-colors py-3 border-b border-white/5">sobre nós</a>
+        <a href="/src/contatos.html" class="font-syne font-bold text-5xl text-white/40 hover:text-white transition-colors py-3">contatos</a>
+      </nav>
+      <div class="flex flex-col gap-4">
+        <a href="/src/contatos.html" class="font-syne font-bold bg-[#5B00E2] text-white text-center text-xl py-5 hover:bg-[#4a00b8] transition-colors">
+          INICIAR PROJETO →
+        </a>
+        <p class="font-space text-white/30 text-sm text-center">contato@okto.ag</p>
       </div>
     </div>
 
-    <div class="cont s--inactive">
-      <div class="cont__inner">
-        <div class="el" style="--bg-img: url('./IMG/bg-fabrica.png')">
-          <div class="el__overflow">
-            <div class="el__bg"></div>
-            <div class="el__preview-cont">
-              <h2 class="el__heading">Fábrica de Galpões</h2>
-            </div>
-            <div class="el__content">
-              <div class="el__close-btn"></div>
-              <div class="el__text">Fábrica de Galpões</div>
-              <p
-                class="font-space text-white/80 mb-8 max-w-md text-sm md:text-lg"
-              >
-                Desenvolvimento corporativo robusto para setor industrial.
-              </p>
-              <a
-                href="https://fabricadegalpoes.com.br/"
-                target="_blank"
-                class="border border-white/30 bg-[#5B00E2] text-white font-syne font-bold px-8 py-3 hover:bg-white hover:text-black transition-all"
-                >VISITAR</a
-              >
-            </div>
-            <div class="el__index">1</div>
-          </div>
-        </div>
-
-        <div class="el" style="--bg-img: url('./IMG/pets-top.png')">
-          <div class="el__overflow">
-            <div class="el__bg"></div>
-            <div class="el__preview-cont">
-              <h2 class="el__heading">PetStop</h2>
-            </div>
-            <div class="el__content">
-              <div class="el__close-btn"></div>
-              <div class="el__text">PetStop</div>
-              <p
-                class="font-space text-white/80 mb-8 max-w-md text-sm md:text-lg"
-              >
-                E-commerce e serviços completos para o mundo pet.
-              </p>
-              <a
-                href="https://petstop.lucasfsl.com.br/"
-                target="_blank"
-                class="border border-white/30 bg-[#5B00E2] text-white font-syne font-bold px-8 py-3 hover:bg-white hover:text-black transition-all"
-                >VISITAR</a
-              >
-            </div>
-            <div class="el__index">2</div>
-          </div>
-        </div>
-
-        <div class="el" style="--bg-img: url('./IMG/forest.png')">
-          <div class="el__overflow">
-            <div class="el__bg"></div>
-            <div class="el__preview-cont">
-              <h2 class="el__heading">Forest</h2>
-            </div>
-            <div class="el__content">
-              <div class="el__close-btn"></div>
-              <div class="el__text">Forest</div>
-              <p
-                class="font-space text-white/80 mb-8 max-w-md text-sm md:text-lg"
-              >
-                Design minimalista focado em natureza e sustentabilidade.
-              </p>
-              <a
-                href="https://forest.lucasfsl.com.br/"
-                target="_blank"
-                class="border border-white/30 bg-[#5B00E2] text-white font-syne font-bold px-8 py-3 hover:bg-white hover:text-black transition-all"
-                >VISITAR</a
-              >
-            </div>
-            <div class="el__index">3</div>
-          </div>
-        </div>
-
-        <div class="el" style="--bg-img: url('./IMG/bikecraft.png')">
-          <div class="el__overflow">
-            <div class="el__bg"></div>
-            <div class="el__preview-cont">
-              <h2 class="el__heading">Bikecraft</h2>
-            </div>
-            <div class="el__content">
-              <div class="el__close-btn"></div>
-              <div class="el__text">Bikecraft</div>
-              <p
-                class="font-space text-white/80 mb-8 max-w-md text-sm md:text-lg"
-              >
-                Bicicletas personalizadas de alta performance.
-              </p>
-              <a
-                href="https://bikecraft.lucasfsl.com.br/"
-                target="_blank"
-                class="border border-white/30 bg-[#5B00E2] text-white font-syne font-bold px-8 py-3 hover:bg-white hover:text-black transition-all"
-                >VISITAR</a
-              >
-            </div>
-            <div class="el__index">4</div>
-          </div>
-        </div>
-
-        <div class="el" style="--bg-img: url('./IMG/Maria.png')">
-          <div class="el__overflow">
-            <div class="el__bg"></div>
-            <div class="el__preview-cont">
-              <h2 class="el__heading">Maria Porta do Céu</h2>
-            </div>
-            <div class="el__content">
-              <div class="el__close-btn"></div>
-              <div class="el__text">Maria Porta do Céu</div>
-              <p
-                class="font-space text-white/80 mb-8 max-w-md text-sm md:text-lg"
-              >
-                Site institucional religioso com design clássico.
-              </p>
-              <a
-                href="https://mariaportadoceu.lucasfsl.com.br/"
-                target="_blank"
-                class="border border-white/30 bg-[#5B00E2] text-white font-syne font-bold px-8 py-3 hover:bg-white hover:text-black transition-all"
-                >VISITAR</a
-              >
-            </div>
-            <div class="el__index">5</div>
-          </div>
-        </div>
+    <!-- ─── PAGE HERO ─── -->
+    <section class="projects-hero max-w-400 mx-auto px-6 md:px-16">
+      <div class="flex items-end justify-between pt-10 pb-8 gap-6">
+        <h2 class="projects-hero__title">Projetos</h2>
+        <span class="font-space text-white/30 text-xl mb-3 flex-shrink-0">(06)</span>
       </div>
-    </div>
+      <p class="font-space text-white/40 text-lg pb-12 max-w-md">
+        Cada projeto é uma história — clique para explorar ao vivo.
+      </p>
+    </section>
 
-    <section
-      class="py-10 bg-black border-t border-b border-white/10 relative z-20 overflow-hidden"
-    >
+    <!-- ─── PROJECT LIST ─── -->
+    <section class="max-w-400 mx-auto px-6 md:px-16">
+
+      <!-- 01 · Fábrica de Galpões -->
+      <article class="project-row" data-url="https://fabricadegalpoes.com.br/" data-img="/IMG/bg-fabrica.png">
+        <div class="project-row-header">
+          <div class="flex items-center gap-6 min-w-0">
+            <span class="project-num">01</span>
+            <h3 class="project-title">Fábrica de Galpões</h3>
+          </div>
+          <div class="flex items-center gap-4 flex-shrink-0">
+            <span class="project-tag hidden md:block">Corporativo · Industrial</span>
+            <button class="project-toggle" aria-label="Expandir">+</button>
+          </div>
+        </div>
+        <div class="project-row-body">
+          <div class="project-body-inner">
+            <div class="project-body-content">
+              <div class="project-desc-col">
+                <p>Desenvolvimento corporativo robusto para o setor industrial, com foco em geração de leads.</p>
+                <a href="https://fabricadegalpoes.com.br/" target="_blank" class="project-visit-btn">
+                  VISITAR SITE <span>↗</span>
+                </a>
+              </div>
+              <div class="project-preview-col">
+                <div class="live-badge"><span class="live-dot"></span> AO VIVO</div>
+                <div class="mobile-thumb">
+                  <img src="/IMG/bg-fabrica.png" alt="Fábrica de Galpões preview" loading="lazy" />
+                </div>
+                <div class="iframe-wrap">
+                  <iframe data-src="https://fabricadegalpoes.com.br/" title="Fábrica de Galpões"></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 02 · PetStop -->
+      <article class="project-row" data-url="https://petstop-amanda.vercel.app/index.html" data-img="/IMG/pets-top.png">
+        <div class="project-row-header">
+          <div class="flex items-center gap-6 min-w-0">
+            <span class="project-num">02</span>
+            <h3 class="project-title">PetStop</h3>
+          </div>
+          <div class="flex items-center gap-4 flex-shrink-0">
+            <span class="project-tag hidden md:block">E-commerce · Pet</span>
+            <button class="project-toggle" aria-label="Expandir">+</button>
+          </div>
+        </div>
+        <div class="project-row-body">
+          <div class="project-body-inner">
+            <div class="project-body-content">
+              <div class="project-desc-col">
+                <p>E-commerce e serviços completos para o mundo pet, com catálogo e agendamento online.</p>
+                <a href="https://petstop-amanda.vercel.app/index.html" target="_blank" class="project-visit-btn">
+                  VISITAR SITE <span>↗</span>
+                </a>
+              </div>
+              <div class="project-preview-col">
+                <div class="live-badge"><span class="live-dot"></span> AO VIVO</div>
+                <div class="mobile-thumb">
+                  <img src="/IMG/pets-top.png" alt="PetStop preview" loading="lazy" />
+                </div>
+                <div class="iframe-wrap">
+                  <iframe data-src="https://petstop-amanda.vercel.app/index.html" title="PetStop"></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 03 · Forest -->
+      <article class="project-row" data-url="https://forest.lucasfsl.com.br/" data-img="/IMG/forest.png">
+        <div class="project-row-header">
+          <div class="flex items-center gap-6 min-w-0">
+            <span class="project-num">03</span>
+            <h3 class="project-title">Forest</h3>
+          </div>
+          <div class="flex items-center gap-4 flex-shrink-0">
+            <span class="project-tag hidden md:block">Design · Sustentabilidade</span>
+            <button class="project-toggle" aria-label="Expandir">+</button>
+          </div>
+        </div>
+        <div class="project-row-body">
+          <div class="project-body-inner">
+            <div class="project-body-content">
+              <div class="project-desc-col">
+                <p>Design minimalista focado em natureza e sustentabilidade, com experiência imersiva.</p>
+                <a href="https://forest.lucasfsl.com.br/" target="_blank" class="project-visit-btn">
+                  VISITAR SITE <span>↗</span>
+                </a>
+              </div>
+              <div class="project-preview-col">
+                <div class="live-badge"><span class="live-dot"></span> AO VIVO</div>
+                <div class="mobile-thumb">
+                  <img src="/IMG/forest.png" alt="Forest preview" loading="lazy" />
+                </div>
+                <div class="iframe-wrap">
+                  <iframe data-src="https://forest.lucasfsl.com.br/" title="Forest"></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 04 · Bikecraft -->
+      <article class="project-row" data-url="https://bikecraft.lucasfsl.com.br/" data-img="/IMG/bikecraft.png">
+        <div class="project-row-header">
+          <div class="flex items-center gap-6 min-w-0">
+            <span class="project-num">04</span>
+            <h3 class="project-title">Bikecraft</h3>
+          </div>
+          <div class="flex items-center gap-4 flex-shrink-0">
+            <span class="project-tag hidden md:block">E-commerce · Lifestyle</span>
+            <button class="project-toggle" aria-label="Expandir">+</button>
+          </div>
+        </div>
+        <div class="project-row-body">
+          <div class="project-body-inner">
+            <div class="project-body-content">
+              <div class="project-desc-col">
+                <p>Bicicletas personalizadas de alta performance — loja com configurador e lookbook.</p>
+                <a href="https://bikecraft.lucasfsl.com.br/" target="_blank" class="project-visit-btn">
+                  VISITAR SITE <span>↗</span>
+                </a>
+              </div>
+              <div class="project-preview-col">
+                <div class="live-badge"><span class="live-dot"></span> AO VIVO</div>
+                <div class="mobile-thumb">
+                  <img src="/IMG/bikecraft.png" alt="Bikecraft preview" loading="lazy" />
+                </div>
+                <div class="iframe-wrap">
+                  <iframe data-src="https://bikecraft.lucasfsl.com.br/" title="Bikecraft"></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 05 · Maria Porta do Céu -->
+      <article class="project-row" data-url="https://mariaportadoceu.lucasfsl.com.br/" data-img="/IMG/Maria.png">
+        <div class="project-row-header">
+          <div class="flex items-center gap-6 min-w-0">
+            <span class="project-num">05</span>
+            <h3 class="project-title">Maria Porta do Céu</h3>
+          </div>
+          <div class="flex items-center gap-4 flex-shrink-0">
+            <span class="project-tag hidden md:block">Institucional · Religioso</span>
+            <button class="project-toggle" aria-label="Expandir">+</button>
+          </div>
+        </div>
+        <div class="project-row-body">
+          <div class="project-body-inner">
+            <div class="project-body-content">
+              <div class="project-desc-col">
+                <p>Site institucional religioso com design clássico e presença digital acolhedora.</p>
+                <a href="https://mariaportadoceu.lucasfsl.com.br/" target="_blank" class="project-visit-btn">
+                  VISITAR SITE <span>↗</span>
+                </a>
+              </div>
+              <div class="project-preview-col">
+                <div class="live-badge"><span class="live-dot"></span> AO VIVO</div>
+                <div class="mobile-thumb">
+                  <img src="/IMG/Maria.png" alt="Maria Porta do Céu preview" loading="lazy" />
+                </div>
+                <div class="iframe-wrap">
+                  <iframe data-src="https://mariaportadoceu.lucasfsl.com.br/" title="Maria Porta do Céu"></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 06 · Guimae Fato -->
+      <article class="project-row" data-url="https://guimaefato.com.br">
+        <div class="project-row-header">
+          <div class="flex items-center gap-6 min-w-0">
+            <span class="project-num">06</span>
+            <h3 class="project-title">Guimae Fato</h3>
+          </div>
+          <div class="flex items-center gap-4 flex-shrink-0">
+            <span class="project-tag hidden md:block">Institucional · Moda</span>
+            <button class="project-toggle" aria-label="Expandir">+</button>
+          </div>
+        </div>
+        <div class="project-row-body">
+          <div class="project-body-inner">
+            <div class="project-body-content">
+              <div class="project-desc-col">
+                <p>Presença digital elegante para marca de moda, com catálogo e identidade visual forte.</p>
+                <a href="https://guimaefato.com.br" target="_blank" class="project-visit-btn">
+                  VISITAR SITE <span>↗</span>
+                </a>
+              </div>
+              <div class="project-preview-col">
+                <div class="live-badge"><span class="live-dot"></span> AO VIVO</div>
+                <div class="mobile-thumb">
+                  <div class="mobile-thumb-gradient">
+                    <span>GUIMAE</span>
+                  </div>
+                </div>
+                <div class="iframe-wrap">
+                  <iframe data-src="https://guimaefato.com.br" title="Guimae Fato"></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- ─── MARQUEE ─── -->
+    <section class="py-10 bg-black border-t border-b border-white/10 relative z-20 overflow-hidden mt-20">
       <div
         class="marquee-wrapper font-syne text-transparent text-6xl md:text-8xl font-bold uppercase"
         style="-webkit-text-stroke: 1px rgba(255, 255, 255, 0.3)"
@@ -695,192 +630,142 @@
       </div>
     </section>
 
+    <!-- ─── CTA ─── -->
     <section
       class="relative w-full min-h-[90vh] bg-[#5B00E2] text-white flex flex-col justify-center p-6 md:p-16 z-20 overflow-hidden"
     >
-      <div
-        class="absolute top-0 right-0 w-[500px] h-[500px] bg-white opacity-5 blur-[150px] rounded-full pointer-events-none"
-      ></div>
+      <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-white opacity-5 blur-[150px] rounded-full pointer-events-none"></div>
 
-      <div
-        class="max-w-[1600px] mx-auto w-full flex flex-col h-full justify-between"
-      >
+      <div class="max-w-400 mx-auto w-full flex flex-col h-full justify-between">
         <div class="overflow-hidden">
           <h2
             id="split-text-anim"
-            class="font-space font-bold text-[12vw] leading-[0.85] tracking-tighter uppercase w-full wrap-break-word mt-10 mix-blend-overlay opacity-0"
+            class="font-space font-bold text-[12vw] leading-[0.85] tracking-tighter uppercase w-full mt-10 mix-blend-overlay opacity-0"
           >
-            FAÇA<br />
-            ACONTECER<br />
-            HOJE
+            FAÇA<br />ACONTECER<br />HOJE
           </h2>
         </div>
 
-        <div
-          class="flex flex-col md:flex-row items-end justify-between mt-20 gap-10"
-        >
+        <div class="flex flex-col md:flex-row items-end justify-between mt-20 gap-10">
           <div class="hidden md:block w-1/3">
             <div class="w-full h-[1px] bg-white/40"></div>
-            <p class="font-syne mt-4 text-sm opacity-70">
-              SCROLL DOWN TO CONNECT
-            </p>
+            <p class="font-syne mt-4 text-sm opacity-70">SCROLL DOWN TO CONNECT</p>
           </div>
 
-          <div
-            class="w-full md:w-1/2 flex flex-col items-start md:items-end text-left md:text-right"
-          >
-            <p
-              class="font-space text-xl md:text-3xl font-medium mb-10 leading-relaxed max-w-lg"
-            >
+          <div class="w-full md:w-1/2 flex flex-col items-start md:items-end text-left md:text-right">
+            <p class="font-space text-xl md:text-3xl font-medium mb-10 leading-relaxed max-w-lg">
               Tem um desafio ou uma ideia ousada?
-              <span class="opacity-60"
-                >Vamos construir o futuro da sua marca.</span
-              >
+              <span class="opacity-60">Vamos construir o futuro da sua marca.</span>
             </p>
 
             <a
-              href="contatos.html"
+              href="/src/contatos.html"
               class="group relative bg-black text-white font-syne font-bold text-xl md:text-2xl px-12 py-6 overflow-hidden transition-all hover:shadow-2xl"
             >
-              <span
-                class="relative z-10 group-hover:text-[#5B00E2] transition-colors duration-300"
-                >INICIAR PROJETO</span
-              >
-              <div
-                class="absolute inset-0 bg-white transform scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-300 ease-in-out"
-              ></div>
+              <span class="relative z-10 group-hover:text-[#5B00E2] transition-colors duration-300">INICIAR PROJETO</span>
+              <div class="absolute inset-0 bg-white transform scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></div>
             </a>
           </div>
         </div>
       </div>
     </section>
 
-    <footer
-      class="bg-white text-black pt-20 pb-10 relative overflow-hidden z-10"
-    >
-      <div
-        class="w-full flex justify-center items-center overflow-hidden border-b border-black/10 pb-10"
-      >
-        <h1
-          class="footer-big-text font-space font-extrabold text-[44vw] leading-none tracking-tighter select-none text-black translate-y-[20%]"
-        >
-          OKTO
-        </h1>
+    <!-- ─── FOOTER ─── -->
+    <footer class="overflow-hidden">
+      <!-- Newsletter bar (dark) -->
+      <div class="bg-[#050505] border-t border-white/8 py-16 px-5 md:px-12">
+        <div class="max-w-400 mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+          <div>
+            <p class="font-syne text-[#5B00E2] text-xs uppercase tracking-[3px] mb-3">Newsletter</p>
+            <h3 class="font-syne font-bold text-2xl md:text-4xl text-white">Novidades e cases<br class="hidden md:block"> direto no seu email</h3>
+          </div>
+          <form class="flex w-full md:w-auto" onsubmit="return false">
+            <input type="email" placeholder="seu@email.com"
+              class="bg-white/5 border border-white/10 text-white font-space text-sm px-5 py-4 outline-none w-full md:w-72 placeholder-white/30 focus:border-[#5B00E2] transition-colors">
+            <button type="submit"
+              class="bg-[#5B00E2] text-white font-syne font-bold text-sm px-6 py-4 shrink-0 hover:bg-[#4a00b8] transition-colors whitespace-nowrap">
+              ASSINAR
+            </button>
+          </form>
+        </div>
       </div>
 
-      <div
-        class="max-w-[1600px] mx-auto px-6 md:px-16 mt-16 grid grid-cols-1 md:grid-cols-12 gap-10"
-      >
-        <div class="md:col-span-4 flex flex-col justify-between">
-          <div>
-            <h3 class="font-syne font-bold text-3xl mb-4">
-              OKTO<span class="text-purple-600">.</span>
-            </h3>
-            <p class="font-space text-lg opacity-60 max-w-xs">
-              Transformando códigos em experiências digitais imersivas e
-              lucrativas.
+      <!-- Main footer (white) -->
+      <div class="bg-white text-black">
+        <!-- OKTO big text -->
+        <div class="w-full overflow-hidden border-b border-black/8">
+          <h1 class="footer-big-text font-space font-extrabold leading-none tracking-tighter select-none text-black translate-y-[15%]"
+            style="font-size: clamp(80px, 28vw, 420px)">OKTO</h1>
+        </div>
+
+        <!-- Links grid -->
+        <div class="max-w-400 mx-auto px-5 md:px-12 py-14 md:py-20 grid grid-cols-2 md:grid-cols-12 gap-x-6 gap-y-12">
+          <!-- Brand col -->
+          <div class="col-span-2 md:col-span-4">
+            <h3 class="font-syne font-extrabold text-2xl mb-3">OKTO<span class="text-purple-600">.</span></h3>
+            <p class="font-space text-sm text-black/55 leading-relaxed max-w-xs mb-6">
+              Agência digital especializada em transformar negócios através de experiências digitais imersivas e de alta performance.
             </p>
+            <div class="flex gap-3">
+              <a href="#" aria-label="Instagram" class="w-9 h-9 border border-black/15 rounded-full flex items-center justify-center hover:bg-black hover:text-white hover:border-black transition-all">
+                <span class="iconify text-base" data-icon="mdi:instagram"></span>
+              </a>
+              <a href="#" aria-label="LinkedIn" class="w-9 h-9 border border-black/15 rounded-full flex items-center justify-center hover:bg-black hover:text-white hover:border-black transition-all">
+                <span class="iconify text-base" data-icon="mdi:linkedin"></span>
+              </a>
+              <a href="#" aria-label="GitHub" class="w-9 h-9 border border-black/15 rounded-full flex items-center justify-center hover:bg-black hover:text-white hover:border-black transition-all">
+                <span class="iconify text-base" data-icon="mdi:github"></span>
+              </a>
+              <a href="#" aria-label="Behance" class="w-9 h-9 border border-black/15 rounded-full flex items-center justify-center hover:bg-black hover:text-white hover:border-black transition-all">
+                <span class="iconify text-base" data-icon="mdi:behance"></span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Navigation -->
+          <div class="col-span-1 md:col-span-2">
+            <h4 class="font-syne font-bold text-xs uppercase tracking-[2px] mb-5 opacity-35">Navegação</h4>
+            <ul class="font-space flex flex-col gap-3 text-sm text-black/70">
+              <li><a href="/src/index.html" class="hover:text-purple-600 transition-colors">Home</a></li>
+              <li><a href="/src/projetos.html" class="hover:text-purple-600 transition-colors">Projetos</a></li>
+              <li><a href="/src/sobre.html" class="hover:text-purple-600 transition-colors">Sobre nós</a></li>
+              <li><a href="/src/contatos.html" class="hover:text-purple-600 transition-colors">Contatos</a></li>
+            </ul>
+          </div>
+
+          <!-- Services -->
+          <div class="col-span-1 md:col-span-2">
+            <h4 class="font-syne font-bold text-xs uppercase tracking-[2px] mb-5 opacity-35">Serviços</h4>
+            <ul class="font-space flex flex-col gap-3 text-sm text-black/70">
+              <li>Websites</li>
+              <li>E-commerce</li>
+              <li>UI/UX Design</li>
+              <li>SEO &amp; Performance</li>
+              <li>Manutenção</li>
+            </ul>
+          </div>
+
+          <!-- Contact -->
+          <div class="col-span-2 md:col-span-4">
+            <h4 class="font-syne font-bold text-xs uppercase tracking-[2px] mb-5 opacity-35">Fale conosco</h4>
+            <a href="mailto:contato@okto.ag" class="font-syne font-bold text-xl md:text-2xl hover:text-purple-600 transition-colors block mb-3">
+              contato@okto.ag
+            </a>
+            <a href="#" class="font-space text-sm text-black/60 hover:text-purple-600 transition-colors block mb-1">
+              WhatsApp →
+            </a>
+            <a href="#" class="font-space text-sm text-black/60 hover:text-purple-600 transition-colors block">
+              Instagram →
+            </a>
           </div>
         </div>
 
-        <div class="md:col-span-2">
-          <h4 class="font-syne font-bold text-lg mb-6 uppercase tracking-wider">
-            Menu
-          </h4>
-          <ul class="flex flex-col gap-3 font-space text-lg">
-            <li>
-              <a
-                href="index.html"
-                class="hover:text-purple-600 transition-colors"
-                >Home</a
-              >
-            </li>
-            <li>
-              <a
-                href="projetos.html"
-                class="hover:text-purple-600 transition-colors"
-                >Projetos</a
-              >
-            </li>
-            <li>
-              <a
-                href="sobre.html"
-                class="hover:text-purple-600 transition-colors"
-                >Sobre</a
-              >
-            </li>
-            <li>
-              <a
-                href="contatos.html"
-                class="hover:text-purple-600 transition-colors"
-                >Contato</a
-              >
-            </li>
-          </ul>
-        </div>
-
-        <div class="md:col-span-2">
-          <h4 class="font-syne font-bold text-lg mb-6 uppercase tracking-wider">
-            Social
-          </h4>
-          <ul class="flex flex-col gap-3 font-space text-lg">
-            <li>
-              <a
-                href="https://www.instagram.com/oktodesignagency/"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="hover:text-purple-600 transition-colors flex items-center gap-2 group"
-              >
-                <span
-                  class="iconify group-hover:-translate-y-1 transition-transform"
-                  data-icon="mdi:instagram"
-                ></span>
-                Instagram
-              </a>
-            </li>
-
-            <li>
-              <a
-                href="https://wa.me/553498183877"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="hover:text-purple-600 transition-colors flex items-center gap-2 group"
-              >
-                <span
-                  class="iconify group-hover:-translate-y-1 transition-transform"
-                  data-icon="mdi:whatsapp"
-                ></span>
-                WhatsApp
-              </a>
-            </li>
-
-            <li>
-              <a
-                href="https://github.com/Luc4sF01"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="hover:text-purple-600 transition-colors flex items-center gap-2 group"
-              >
-                <span
-                  class="iconify group-hover:-translate-y-1 transition-transform"
-                  data-icon="mdi:github"
-                ></span>
-                GitHub
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="md:col-span-4 md:text-right flex flex-col justify-end">
-          <a
-            href="mailto:contato@okto.com"
-            class="font-syne font-bold text-2xl md:text-3xl hover:text-purple-600 transition-colors mb-6"
-          >
-            contato@okto.ag
-          </a>
-          <div class="font-space text-sm opacity-50 mt-auto">
-            <p>&copy; 2024 OKTO Agency.</p>
-            <p>Todos os direitos reservados.</p>
+        <!-- Bottom bar -->
+        <div class="border-t border-black/8 px-5 md:px-12 py-5 max-w-400 mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
+          <p class="font-space text-xs text-black/40">© 2024 OKTO Agency. Todos os direitos reservados.</p>
+          <div class="flex gap-6 font-space text-xs text-black/40">
+            <a href="#" class="hover:text-black transition-colors">Política de Privacidade</a>
+            <a href="#" class="hover:text-black transition-colors">Termos de Uso</a>
           </div>
         </div>
       </div>
@@ -893,49 +778,113 @@
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 
     <script>
-      // 1. Configuração do Lenis (Scroll Suave)
+      // ─── LENIS SMOOTH SCROLL ───
       const lenis = new Lenis({
         duration: 1.2,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         direction: 'vertical',
         smooth: true,
       });
-
-      function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-      }
+      function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
       requestAnimationFrame(raf);
 
-      // Conectar Lenis ao ScrollTrigger do GSAP
       gsap.registerPlugin(ScrollTrigger);
       lenis.on('scroll', ScrollTrigger.update);
-      gsap.ticker.add((time) => {
-        lenis.raf(time * 1000);
-      }); // Correção de tempo para sincronia
+      gsap.ticker.add((time) => { lenis.raf(time * 1000); });
       gsap.ticker.lagSmoothing(0);
 
-      // 2. Animação de Texto com SPLIT TYPE + GSAP
-      const textElement = document.getElementById('split-text-anim');
-      const text = new SplitType(textElement, { types: 'chars, words' });
-      textElement.style.opacity = 1;
+      // ─── IFRAME SCALING ───
+      function scaleIframes() {
+        document.querySelectorAll('.iframe-wrap').forEach(wrap => {
+          const iframe = wrap.querySelector('iframe');
+          if (!iframe) return;
+          const w = wrap.offsetWidth;
+          const scale = w / 1440;
+          iframe.style.transform = `scale(${scale})`;
+          wrap.style.height = Math.round(900 * scale) + 'px';
+        });
+      }
+      window.addEventListener('resize', scaleIframes);
 
-      gsap.from(text.chars, {
-        scrollTrigger: {
-          trigger: textElement,
-          start: 'top 55%',
-          end: 'bottom 35%',
-          toggleActions: 'play none none reverse',
-        },
-        y: 100,
-        opacity: 0,
-        rotate: 10,
-        stagger: 0.05,
-        duration: 0.8,
-        ease: 'back.out(1.7)',
+      // ─── ACCORDION ───
+      document.querySelectorAll('.project-row').forEach(row => {
+        const header = row.querySelector('.project-row-header');
+        const toggle = row.querySelector('.project-toggle');
+
+        header.addEventListener('click', () => {
+          const isOpen = row.classList.contains('is-open');
+
+          // Close all open rows
+          document.querySelectorAll('.project-row.is-open').forEach(r => {
+            r.classList.remove('is-open');
+            r.querySelector('.project-toggle').textContent = '+';
+          });
+
+          if (!isOpen) {
+            row.classList.add('is-open');
+            toggle.textContent = '−';
+
+            // Lazy-load iframe
+            const iframe = row.querySelector('iframe[data-src]');
+            if (iframe && !iframe.src) {
+              iframe.src = iframe.dataset.src;
+            }
+
+            // Scale after a tiny delay (let grid-template-rows open first)
+            setTimeout(scaleIframes, 80);
+          }
+        });
+
+        // Prevent visit button from toggling
+        const visitBtn = row.querySelector('.project-visit-btn');
+        if (visitBtn) visitBtn.addEventListener('click', e => e.stopPropagation());
       });
 
-      // 3. Animação Footer (Parallax Texto)
+      // ─── GSAP ANIMATIONS ───
+      // Animate project rows on scroll
+      gsap.from('.project-row', {
+        scrollTrigger: {
+          trigger: '.project-row',
+          start: 'top 85%',
+        },
+        y: 40,
+        opacity: 0,
+        stagger: 0.08,
+        duration: 0.7,
+        ease: 'power3.out',
+      });
+
+      // Hero title
+      gsap.from('.projects-hero__title', {
+        y: 60,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out',
+        delay: 0.1,
+      });
+
+      // CTA text animation
+      const textElement = document.getElementById('split-text-anim');
+      if (textElement) {
+        const text = new SplitType(textElement, { types: 'chars, words' });
+        textElement.style.opacity = 1;
+        gsap.from(text.chars, {
+          scrollTrigger: {
+            trigger: textElement,
+            start: 'top 55%',
+            end: 'bottom 35%',
+            toggleActions: 'play none none reverse',
+          },
+          y: 100,
+          opacity: 0,
+          rotate: 10,
+          stagger: 0.05,
+          duration: 0.8,
+          ease: 'back.out(1.7)',
+        });
+      }
+
+      // Footer parallax
       gsap.to('.footer-big-text', {
         scrollTrigger: {
           trigger: 'footer',
@@ -948,60 +897,35 @@
         ease: 'none',
       });
 
-      // 4. Lógica Expanding Cards (Projetos)
-      const cont = document.querySelector('.cont');
-      const elsArr = [].slice.call(document.querySelectorAll('.el'));
-      const closeBtnsArr = [].slice.call(
-        document.querySelectorAll('.el__close-btn'),
-      );
-
-      setTimeout(function () {
-        cont.classList.remove('s--inactive');
-      }, 200);
-
-      elsArr.forEach(function (el) {
-        el.addEventListener('click', function () {
-          if (this.classList.contains('s--active')) return;
-          cont.classList.add('s--el-active');
-          this.classList.add('s--active');
-        });
-      });
-
-      closeBtnsArr.forEach(function (btn) {
-        btn.addEventListener('click', function (e) {
-          e.stopPropagation();
-          cont.classList.remove('s--el-active');
-          document.querySelector('.el.s--active').classList.remove('s--active');
-        });
-      });
-
-      // 5. LOGICA DO MENU MOBILE (ADICIONADA)
+      // ─── MOBILE MENU ───
       const menuBtn = document.getElementById('menu-btn');
-      const mobileMenu = document.getElementById('mobile-menu-overlay');
-      const mobileLinks = document.querySelectorAll('.mobile-link');
-      const spans = menuBtn.querySelectorAll('span');
-      let isMenuOpen = false;
+      const mobileMenu = document.getElementById('mobile-menu');
+      const menuBars = document.querySelectorAll('.menu-bar');
 
       menuBtn.addEventListener('click', () => {
-        isMenuOpen = !isMenuOpen;
-        if (isMenuOpen) {
-          mobileMenu.classList.remove('translate-x-full');
-          mobileMenu.classList.add('translate-x-0');
-          spans[0].style.transform = 'rotate(45deg) translate(5px, 6px)';
-          spans[1].style.transform = 'rotate(-45deg) translate(5px, -6px)';
-          document.body.style.overflow = 'hidden';
-        } else {
+        const isOpen = mobileMenu.classList.contains('translate-x-0');
+        if (isOpen) {
           mobileMenu.classList.remove('translate-x-0');
           mobileMenu.classList.add('translate-x-full');
-          spans[0].style.transform = 'rotate(0) translate(0, 0)';
-          spans[1].style.transform = 'rotate(0) translate(0, 0)';
-          document.body.style.overflow = '';
+          menuBars[0].style.transform = '';
+          menuBars[0].style.marginTop = '';
+          menuBars[1].style.transform = '';
+          menuBars[1].style.opacity = '';
+          menuBars[2].style.opacity = '';
+        } else {
+          mobileMenu.classList.add('translate-x-0');
+          mobileMenu.classList.remove('translate-x-full');
+          menuBars[0].style.transform = 'rotate(45deg) translate(3px, 3px)';
+          menuBars[1].style.transform = 'rotate(-45deg) translate(3px, -3px)';
+          menuBars[2].style.opacity = '0';
         }
       });
 
-      mobileLinks.forEach((link) => {
+      // Close menu on link click
+      document.querySelectorAll('#mobile-menu a').forEach(link => {
         link.addEventListener('click', () => {
-          if (isMenuOpen) menuBtn.click();
+          mobileMenu.classList.remove('translate-x-0');
+          mobileMenu.classList.add('translate-x-full');
         });
       });
     </script>
