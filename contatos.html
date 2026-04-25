@@ -223,12 +223,10 @@
           </a>
 
           <!-- MOBILE -->
-          <button
-            id="menu-btn"
-            class="md:hidden flex flex-col justify-center items-center gap-1.5 w-10 h-10 border border-white/20 bg-white/5 rounded-full"
-          >
-            <span class="block w-5 h-0.5 bg-white"></span>
-            <span class="block w-5 h-0.5 bg-white"></span>
+          <button id="menu-btn" class="md:hidden flex flex-col justify-center items-center gap-1.5 w-10 h-10 z-50 relative">
+            <span class="menu-bar block w-6 h-0.5 bg-white transition-all duration-300 origin-center"></span>
+            <span class="menu-bar block w-6 h-0.5 bg-white transition-all duration-300 origin-center"></span>
+            <span class="menu-bar block w-4 h-0.5 bg-white/50 transition-all duration-300 self-start"></span>
           </button>
         </div>
       </div>
@@ -660,10 +658,10 @@
 
         <div class="md:col-span-4 md:text-right flex flex-col justify-end">
           <a
-            href="mailto:contato@okto.com"
+            href="mailto:lucashfilipe@gmail.com"
             class="font-syne font-bold text-2xl md:text-3xl hover:text-purple-600 transition-colors mb-6 break-words"
           >
-            contato@okto.ag
+            lucashfilipe@gmail.com
           </a>
           <div class="font-space text-sm opacity-50 mt-auto">
             <p>&copy; 2024 OKTO Agency.</p>
@@ -697,42 +695,34 @@
       gsap.ticker.lagSmoothing(0);
       gsap.registerPlugin(ScrollTrigger);
 
-      // 2. LOGICA DO MENU MOBILE (CORRIGIDA)
+      // 2. LOGICA DO MENU MOBILE
       const menuBtn = document.getElementById('menu-btn');
       const mobileMenu = document.getElementById('mobile-menu-overlay');
-      const mobileLinks = document.querySelectorAll('.mobile-link');
-      const spans = menuBtn.querySelectorAll('span');
+      const menuBars = document.querySelectorAll('.menu-bar');
       let isMenuOpen = false;
 
       menuBtn.addEventListener('click', () => {
         isMenuOpen = !isMenuOpen;
         if (isMenuOpen) {
-          // Abrir Menu
           mobileMenu.classList.remove('translate-x-full');
           mobileMenu.classList.add('translate-x-0');
-          // Animar Ícone para X
-          spans[0].style.transform = 'rotate(45deg) translate(5px, 6px)';
-          spans[1].style.transform = 'rotate(-45deg) translate(5px, -6px)';
-
-          // TRAVAR O LENIS SCROLL (IMPORTANTE)
+          menuBars[0].style.transform = 'rotate(45deg) translate(3px, 3px)';
+          menuBars[1].style.transform = 'rotate(-45deg) translate(3px, -3px)';
+          menuBars[2].style.opacity = '0';
           lenis.stop();
           document.body.style.overflow = 'hidden';
         } else {
-          // Fechar Menu
           mobileMenu.classList.remove('translate-x-0');
           mobileMenu.classList.add('translate-x-full');
-          // Voltar Ícone para Hambúrguer
-          spans[0].style.transform = 'rotate(0) translate(0, 0)';
-          spans[1].style.transform = 'rotate(0) translate(0, 0)';
-
-          // DESTRAVAR O LENIS SCROLL
+          menuBars[0].style.transform = '';
+          menuBars[1].style.transform = '';
+          menuBars[2].style.opacity = '';
           lenis.start();
           document.body.style.overflow = '';
         }
       });
 
-      // Fechar ao clicar em um link
-      mobileLinks.forEach((link) => {
+      document.querySelectorAll('#mobile-menu-overlay a').forEach(link => {
         link.addEventListener('click', () => {
           if (isMenuOpen) menuBtn.click();
         });

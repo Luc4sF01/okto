@@ -158,45 +158,28 @@
           </a>
 
           <!-- MOBILE -->
-          <button
-            id="menu-btn"
-            class="md:hidden flex flex-col justify-center items-center gap-1.5 w-10 h-10 border border-white/20 bg-white/5 rounded-full"
-          >
-            <span class="block w-5 h-0.5 bg-white"></span>
-            <span class="block w-5 h-0.5 bg-white"></span>
+          <button id="menu-btn" class="md:hidden flex flex-col justify-center items-center gap-1.5 w-10 h-10 z-50 relative">
+            <span class="menu-bar block w-6 h-0.5 bg-white transition-all duration-300 origin-center"></span>
+            <span class="menu-bar block w-6 h-0.5 bg-white transition-all duration-300 origin-center"></span>
+            <span class="menu-bar block w-4 h-0.5 bg-white/50 transition-all duration-300 self-start"></span>
           </button>
         </div>
       </div>
     </header>
 
-    <div
-      id="mobile-menu-overlay"
-      class="fixed inset-0 bg-black z-40 transform translate-x-full flex flex-col justify-center items-center h-screen w-screen md:hidden"
-    >
-      <ul class="flex flex-col gap-8 text-center">
-        <li>
-          <a
-            class="mobile-link font-syne text-white text-4xl hover:text-purple-500"
-            href="./projetos.html"
-            >projetos</a
-          >
-        </li>
-
-        <li>
-          <a
-            class="mobile-link font-syne text-white text-4xl hover:text-purple-500"
-            href="./sobre.html"
-            >sobre nós</a
-          >
-        </li>
-        <li>
-          <a
-            class="mobile-link font-syne text-white text-4xl hover:text-purple-500"
-            href="./contatos.html"
-            >contatos</a
-          >
-        </li>
-      </ul>
+    <div id="mobile-menu" class="fixed inset-0 bg-black z-40 translate-x-full transition-transform duration-500 ease-in-out md:hidden flex flex-col justify-between py-24 px-8">
+      <nav class="flex flex-col gap-2 mt-8">
+        <a href="./index.html" class="font-syne font-bold text-5xl text-[#5B00E2] py-3 border-b border-white/5">home</a>
+        <a href="./projetos.html" class="font-syne font-bold text-5xl text-white/40 hover:text-white transition-colors py-3 border-b border-white/5">projetos</a>
+        <a href="./sobre.html" class="font-syne font-bold text-5xl text-white/40 hover:text-white transition-colors py-3 border-b border-white/5">sobre nós</a>
+        <a href="./contatos.html" class="font-syne font-bold text-5xl text-white/40 hover:text-white transition-colors py-3">contatos</a>
+      </nav>
+      <div class="flex flex-col gap-4">
+        <a href="./contatos.html" class="font-syne font-bold bg-[#5B00E2] text-white text-center text-xl py-5 hover:bg-[#4a00b8] transition-colors">
+          INICIAR PROJETO →
+        </a>
+        <p class="font-space text-white/30 text-sm text-center">lucashfilipe@gmail.com</p>
+      </div>
     </div>
 
     <!-- ═══════════════ HERO FULL-SCREEN ═══════════════ -->
@@ -860,10 +843,10 @@
 
         <div class="md:col-span-4 md:text-right flex flex-col justify-end">
           <a
-            href="mailto:contato@okto.com"
+            href="mailto:lucashfilipe@gmail.com"
             class="font-syne font-bold text-2xl md:text-3xl hover:text-purple-600 transition-colors mb-6 break-words"
           >
-            contato@okto.ag
+            lucashfilipe@gmail.com
           </a>
           <div class="font-space text-sm opacity-50 mt-auto">
             <p>&copy; 2024 OKTO Agency.</p>
@@ -884,30 +867,39 @@
     <script>
       // LOGICA DO MENU MOBILE
       const menuBtn = document.getElementById('menu-btn');
-      const mobileMenu = document.getElementById('mobile-menu-overlay');
-      const mobileLinks = document.querySelectorAll('.mobile-link');
-      let isMenuOpen = false;
+      const mobileMenu = document.getElementById('mobile-menu');
+      const menuBars = document.querySelectorAll('.menu-bar');
 
       menuBtn.addEventListener('click', () => {
-        isMenuOpen = !isMenuOpen;
-
-        const spans = menuBtn.querySelectorAll('span');
-        if (isMenuOpen) {
-          spans[0].style.transform = 'rotate(45deg) translate(5px, 6px)';
-          spans[1].style.transform = 'rotate(-45deg) translate(5px, -6px)';
-          mobileMenu.classList.remove('translate-x-full');
-          document.body.classList.add('menu-open');
-        } else {
-          spans[0].style.transform = 'rotate(0) translate(0, 0)';
-          spans[1].style.transform = 'rotate(0) translate(0, 0)';
+        const isOpen = mobileMenu.classList.contains('translate-x-0');
+        if (isOpen) {
+          mobileMenu.classList.remove('translate-x-0');
           mobileMenu.classList.add('translate-x-full');
-          document.body.classList.remove('menu-open');
+          menuBars[0].style.transform = '';
+          menuBars[1].style.transform = '';
+          menuBars[2].style.opacity = '';
+          lenis.start();
+          document.body.style.overflow = '';
+        } else {
+          mobileMenu.classList.add('translate-x-0');
+          mobileMenu.classList.remove('translate-x-full');
+          menuBars[0].style.transform = 'rotate(45deg) translate(3px, 3px)';
+          menuBars[1].style.transform = 'rotate(-45deg) translate(3px, -3px)';
+          menuBars[2].style.opacity = '0';
+          lenis.stop();
+          document.body.style.overflow = 'hidden';
         }
       });
 
-      mobileLinks.forEach((link) => {
+      document.querySelectorAll('#mobile-menu a').forEach(link => {
         link.addEventListener('click', () => {
-          if (isMenuOpen) menuBtn.click();
+          mobileMenu.classList.remove('translate-x-0');
+          mobileMenu.classList.add('translate-x-full');
+          menuBars[0].style.transform = '';
+          menuBars[1].style.transform = '';
+          menuBars[2].style.opacity = '';
+          lenis.start();
+          document.body.style.overflow = '';
         });
       });
 
